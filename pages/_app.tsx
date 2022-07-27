@@ -6,16 +6,16 @@ import { ApolloProvider } from "@apollo/client";
 import { Provider } from 'react-redux'
 import store from '@redux/store'
 
+function MyApp({Component, pageProps}: AppProps): JSX.Element {
+  const apolloClient = initializeApollo(); //default
 
-function MyApp({ Component, pageProps }: AppProps): JSX.Element {
-    const apolloClient = initializeApollo();
-    return (
-        <ApolloProvider client={apolloClient}>
-<Provider store={store}>
-        <Component {...pageProps} />
-        </Provider>
-</ApolloProvider>
-    );
+  return (
+    <ApolloProvider client={ apolloClient }>
+      <Provider store={ store }>
+        <Component { ...pageProps } />
+      </Provider>
+    </ApolloProvider>
+  );
 }
 
 export default MyApp;

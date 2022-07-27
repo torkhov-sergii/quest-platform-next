@@ -8,8 +8,7 @@
     "start": "next start",
     "apollo:download-schema": "apollo client:download-schema schema.graphql",
     "apollo:generate-types": "rm -rf __generated__ && apollo client:codegen --target typescript --outputFlat",
-    "apollo:sync": "npm run apollo:download-schema && npm run apollo:generate-types",
-    "lint": "eslint '**/*.{js,jsx,ts,tsx}'"
+    "apollo:sync": "npm run apollo:download-schema && npm run apollo:generate-types"
   },
   "dependencies": {
     "next": "^12.1.6",
