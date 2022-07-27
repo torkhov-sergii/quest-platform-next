@@ -1,25 +1,15 @@
 import React from 'react';
 import { GET_LAUNCHES } from "@components/pages/main-page/graphql";
-import { useQuery } from "@apollo/client";
-import { GetLaunches, GetLaunchesVariables } from "@graphqlTypes/GetLaunches";
 import { getApolloClient } from "@services/graphql/conf/apolloClient";
+import styles from "./index.module.scss";
 
 interface IMainPage {
   data: any
 }
 
 const MainPage: React.FC<IMainPage> = ({data}) => {
-  // const {data : dataApollo, loading, error} = useQuery(GET_LAUNCHES, {
-  //   ssr: true,
-  //   variables: {
-  //     limit: 2
-  //   },
-  // })
-
   return (
-    <div>
-      test
-
+    <div className={styles.home}>
       { data && data.launchesPast.map((val: any) => {
         return (
           <div key={val.mission_name}>
