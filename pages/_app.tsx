@@ -8,6 +8,7 @@ import { Provider } from 'react-redux'
 import store from '@redux/store'
 import type {NextPage} from 'next'
 import Layout from "@components/layouts/layout";
+import { ThemeProvider } from 'next-themes'
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -24,9 +25,11 @@ function MyApp({Component, pageProps}: AppPropsWithLayout): JSX.Element {
   return (
     <ApolloProvider client={ apolloClient }>
       <Provider store={ store }>
-        {getLayout(
-          <Component { ...pageProps } />
-        )}
+        <ThemeProvider themes={['red', 'blue']} forcedTheme={'red'}>
+          {getLayout(
+            <Component { ...pageProps } />
+          )}
+        </ThemeProvider>
       </Provider>
     </ApolloProvider>
   );
