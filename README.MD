@@ -1,87 +1,103 @@
-# test
+# questplatform
 
 
 This project was generated with [superplate](https://github.com/pankod/superplate).
 
-## Getting Started
-
-superplate is a Next.js all-in-one project generator. Create your project with the tools you need without spending hours on setting them up.
-
-## Available Scripts
-
-### Running the development server.
-
-```bash
-    yarn dev
+## Requirements
+```
+Ubuntu 20.04
+node v16.15.0
+npm 8.5.5
+pm2 5.2.0
 ```
 
-### Building for production.
-
-```bash
-    yarn build
+## Download project
+```
+git clone git@github.com:********.git
+mv questplatform-next questplatform-next.loc
+cd questplatform-next.loc
+cp .env.example .env.local
+npm i
 ```
 
-### Running the production server.
-
-```bash
-    yarn start
+## Running the development server
+```
+npm run dev
 ```
 
-## Learn More
+## Building for production
+```
+npm run build
+pm2 delete questplatform
+pm2 start npm --name "questplatform" -- start
+```
 
-To learn more about **superplate**, please check out the [Documentation](https://github.com/pankod/superplate).
+## Quick deploy for production
+```
+pm2 start -- run start-boost
+git pull origin develop && npm i && npm run build && pm2 delete questplatform && pm2 start npm --name "questplatform" -- start
+```
 
+## Config env.local
+```
 
-### **SASS/SCSS**
+```
 
-Sass is a stylesheet language that’s compiled to CSS. It allows you to use variables, nested rules, mixins, functions, and more, all with a fully CSS-compatible syntax.
+## NGINX configuration (/etc/nginx/sites-available/next.conf)
+```
+server {
 
-[Go To Documentation](https://sass-lang.com/documentation)
+    listen 443 ssl http2;
+    listen       [::]:443 ssl http2;
 
+    server_name dev.dron.media;
 
-### **Environment Variables**
+    ssl_certificate     /etc/letsencrypt/live/dev1.kyivindependent.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/dev1.kyivindependent.com/privkey.pem;
+    ssl_protocols       TLSv1.1 TLSv1.2;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
 
-Use environment variables in your next.js project for server side, client or both.
+    if ($host !~ ^dev1.kyivindependent.com$ ) {
+       return 444;
+    }
 
-[Go To Documentation](https://github.com/vercel/next.js/tree/canary/examples/environment-variables)
+    if ($http_transfer_encoding ~* chunked) {
+        return 444;
+    }
 
+    location ~ /\. { deny all; }
+    location ~ /tmp/.* {deny all;}
+    location ~ /log/.* {deny all;}
+    location ~ /.*\.log {deny all; }
+    location ~ /\.ssh/.* {deny all;}
+    location ~ /\.ht {deny all;}
+    location ~ /\.svn {deny all;}
+    location ~ /\.subversion {deny all;}
+    location ~ /\.git {deny all;}
+    location ~ /\.env {deny all;}
+    location ~ /\.(?!well-known).* {deny all;}
+    location ~ /\..* {deny all;}
 
-### **Reverse Proxy**
+    location / {
+      # Reverse proxy for Next server
+      proxy_pass http://localhost:3020;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "upgrade";
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_set_header X-Forwarded-Host $host;
+      proxy_set_header X-Forwarded-Port $server_port;
 
-Proxying some URLs can be useful when you have a separate API backend development server and you want to send API requests on the same domain.
+      # we need to remove this 404 handling
+      # because of Next's error handling and _next folder
+      # try_files $uri $uri/ =404;
+    }
 
-[Go To Documentation](https://webpack.js.org/configuration/dev-server/#devserverproxy)
+    client_max_body_size 100M;
 
+}
+```
 
-### **Apollo GraphQL**
-
-Apollo Client is a comprehensive state management library for JavaScript that enables you to manage both local and remote data with GraphQL. Use it to fetch, cache, and modify application data, all while automatically updating your UI.
-
-[Go To Documentation](https://www.apollographql.com/docs/react/)
-
-
-### **React Redux**
-
-Redux helps you write applications that behave consistently, run in different environments (client, server, and native), and are easy to test.
-
-[Go To Documentation](https://redux.js.org/introduction/getting-started)
-
-
-### **ESLint**
-
-A pluggable and configurable linter tool for identifying and reporting on patterns in JavaScript. Maintain your code quality with ease.
-
-[Go To Documentation](https://eslint.org/docs/user-guide/getting-started)
-
-
-### **lint-staged**
-
- The concept of lint-staged is to run configured linter (or other) tasks on files that are staged in git.
-
-[Go To Documentation](https://github.com/okonet/lint-staged)
-
-
-
-## License
-
-MIT
