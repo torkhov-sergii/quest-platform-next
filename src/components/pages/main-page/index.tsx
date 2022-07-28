@@ -3,28 +3,33 @@ import { GET_LAUNCHES } from "@components/pages/main-page/graphql";
 import { getApolloClient } from "@services/graphql/conf/apolloClient";
 import styles from "./index.module.scss";
 import classNames from "classnames";
+import { NextSeo } from 'next-seo';
 
 interface IMainPage {
   data: any
 }
 
-
-
 const MainPage: React.FC<IMainPage> = ({data}) => {
   return (
-    <div className={styles.home}>
-      111
-      222
-      <div className={classNames(styles.home, 'foo', 'bar')}>
-        { data && data.launchesPast.map((val: any) => {
-          return (
-            <div key={val.mission_name}>
+    <>
+      <NextSeo
+        title="Simple Usage Example"
+        description="A short description goes here."
+      />
+      <div className={styles.home}>
+        111
+        222
+        <div className={classNames(styles.home, 'foo', 'bar')}>
+          { data && data.launchesPast.map((val: any) => {
+            return (
+              <div key={val.mission_name}>
                 <h3>{val.mission_name}</h3>
-            </div>
-          )
-        }) }
+              </div>
+            )
+          }) }
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
