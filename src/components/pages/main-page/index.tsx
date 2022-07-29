@@ -17,10 +17,9 @@ const MainPage: React.FC<IMainPage> = ({data}) => {
         description="A short description goes here."
       />
       <div className={styles.home}>
-        111
-        222
+        <h1>main page</h1>
         <div className={classNames(styles.home, 'foo', 'bar')}>
-          { data && data.launchesPast.map((val: any) => {
+          { data && data.map((val: any) => {
             return (
               <div key={val.mission_name}>
                 <h3>{val.mission_name}</h3>
@@ -37,14 +36,23 @@ export default MainPage;
 
 export async function getServerSideProps(ctx: any) {
 
-  const apolloClient = getApolloClient()
+  // const apolloClient = getApolloClient()
+  //
+  // const { data } = await apolloClient.query({
+  //   query: GET_LAUNCHES,
+  //   variables: {
+  //     limit: 2,
+  //   },
+  // })
 
-  const { data } = await apolloClient.query({
-    query: GET_LAUNCHES,
-    variables: {
-      limit: 2,
+  let data = [
+    {
+      "mission_name": 'Mission 1',
     },
-  })
+    {
+      "mission_name": 'Mission 2',
+    }
+  ]
 
   return data;
 }

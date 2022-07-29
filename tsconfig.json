@@ -54,6 +54,12 @@
       ],
       "@redux": [
         "src/redux"
+      ],
+      "@settings/*": [
+        "src/settings/*"
+      ],
+      "@settings": [
+        "src/settings"
       ]
     },
     "incremental": true

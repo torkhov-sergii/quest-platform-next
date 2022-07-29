@@ -5,15 +5,16 @@ import { GlobalContext } from "../../../../pages/_app";
 import classNames from "classnames";
 
 export const Header: React.FC = () => {
-  const {mainMenu} = React.useContext<any>(GlobalContext);
+  //const {mainMenu} = React.useContext<any>(GlobalLayoutContext); // example - get serverProps
+  const {menu} = React.useContext<any>(GlobalContext);
 
   return (
     <div className={ styles.header }>
       <div className={ classNames(styles.home, 'foo', 'bar') }>
-        { mainMenu && mainMenu.launchesPast.map((val: any) => {
+        { menu && menu.header?.map((val: any) => {
           return (
-            <div key={ val.mission_name }>
-              { val.mission_name }
+            <div key={ val.id }>
+              { val.name } - { val?.link }
             </div>
           )
         }) }

@@ -1,0 +1,16 @@
+{
+  "menu": {
+    "header" : [
+      {
+        "id": 1,
+        "name": "Post 1",
+        "link": "Post 1"
+      },
+      {
+        "id": 2,
+        "name": "Post 2",
+        "link": "Post 2"
+      }
+    ]
+  }
+}
