@@ -18,18 +18,28 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout,
 }
 
+export const GlobalContext = React.createContext<any>({});
+
+// Глобальный контекст, не работает динамически и нужен build для изменения
+// import globalData from './seed/global-manifest.json';
+// let GlobalContextData = {
+//   posts: globalData.posts,
+// };
+
 function MyApp({Component, pageProps}: AppPropsWithLayout): JSX.Element {
   const apolloClient = initializeApollo(); //default
-  const getLayout = Component.getLayout ?? ((page) => <Layout>{page}</Layout>)
+  //const getLayout = Component.getLayout ?? ((page) => <Layout>{page}</Layout>)
 
   return (
     <ApolloProvider client={ apolloClient }>
       <Provider store={ store }>
-        <ThemeProvider themes={['red', 'blue']} forcedTheme={'red'}>
-          {getLayout(
-            <Component { ...pageProps } />
-          )}
-        </ThemeProvider>
+        {/*<GlobalContext.Provider value={GlobalContextData}>*/}
+          <ThemeProvider themes={['red', 'blue']} forcedTheme={'red'}>
+            {/*{getLayout(*/}
+              <Component { ...pageProps } />
+            {/*)}*/}
+          </ThemeProvider>
+        {/*</GlobalContext.Provider>*/}
       </Provider>
     </ApolloProvider>
   );
