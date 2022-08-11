@@ -9,6 +9,7 @@ import store from '@redux/store'
 import type {NextPage} from 'next'
 import Layout from "@components/layouts/layout";
 import { ThemeProvider } from 'next-themes'
+import { appWithTranslation } from 'next-i18next'
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -46,4 +47,4 @@ function MyApp({Component, pageProps}: AppPropsWithLayout): JSX.Element {
   );
 }
 
-export default MyApp;
+export default appWithTranslation(MyApp);

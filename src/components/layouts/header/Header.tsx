@@ -4,6 +4,7 @@ import { Logo } from "@components/scss";
 import { GlobalContext } from "../../../../pages/_app";
 import classNames from "classnames";
 import { Menu } from "@components/layouts/header/Menu/Menu";
+import LanguageSwitcher from "@components/layouts/header/LanguageSwitcher/LanguageSwitcher";
 
 export const Header: React.FC = () => {
   return (
@@ -12,6 +13,8 @@ export const Header: React.FC = () => {
       <Logo/>
 
       <Menu/>
+
+      <LanguageSwitcher/>
 
     </div>
   );
