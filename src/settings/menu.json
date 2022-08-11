@@ -3,13 +3,18 @@
     "header" : [
       {
         "id": 1,
-        "name": "Post 1",
-        "link": "Post 1"
+        "name": "Home",
+        "link": "/"
       },
       {
         "id": 2,
-        "name": "Post 2",
-        "link": "Post 2"
+        "name": "About",
+        "link": "about"
+      },
+      {
+        "id": 3,
+        "name": "Contacts",
+        "link": "contacts"
       }
     ]
   }

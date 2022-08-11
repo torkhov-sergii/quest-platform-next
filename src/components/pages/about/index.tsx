@@ -1,27 +1,27 @@
 import React from 'react';
+import { getApolloClient } from "@services/graphql/conf/apolloClient";
 import styles from "./index.module.scss";
 import classNames from "classnames";
 import { NextSeo } from 'next-seo';
-import { IPage } from "@components/pages/type"
-import { getApolloClient } from "@services/graphql/conf/apolloClient";
-import { GetPage } from "@components/pages/graphql";
 import { tryParseJSONObject } from "../../../helpers/string";
+import { IPage } from "@components/pages/type"
+import { GetPage } from "@components/pages/graphql";
 
-const MainPage: React.FC<IPage> = ({data}) => {
+const About: React.FC<IPage> = ({data}) => {
   const page = data.page;
   const content = page && tryParseJSONObject(page.content);
 
   return (
     <>
       <NextSeo
-        title="Home"
-        description="Home description"
+        title="About"
+        description="About description"
       />
 
-      <div className={styles.home}>
-        <h1>home</h1>
+      <div className={styles.about}>
+        <h1>About</h1>
 
-        <div className={classNames(styles.home, 'foo', 'bar')}>
+        <div className={classNames(styles.about, 'foo', 'bar')}>
           { page?.id }{ page?.title }
 
           <div dangerouslySetInnerHTML={{ __html: content?.description }}/>
@@ -31,7 +31,7 @@ const MainPage: React.FC<IPage> = ({data}) => {
   );
 }
 
-export default MainPage;
+export default About;
 
 export async function getServerSideProps(ctx: any) {
 
@@ -40,7 +40,7 @@ export async function getServerSideProps(ctx: any) {
   const { data } = await apolloClient.query({
     query: GetPage,
     variables: {
-      slug: 'home',
+      slug: 'about',
     },
   })
 
