@@ -3,14 +3,16 @@ import { initializeApollo } from "@services/graphql/conf/apollo";
 import styles from "./index.module.scss";
 import classNames from "classnames";
 import { NextSeo } from 'next-seo';
-import { tryParseJSONObject, tryParseJSONString, parseGraphQlResponse } from "../../../helpers/string";
+import { tryParseJSONObject, tryParseJSONString } from "../../../helpers/string";
 import { IPage } from "@components/pages/type"
 import { GetPage } from "@components/pages/graphql";
 import { useTranslation, Trans } from 'next-i18next';
 import { useQuery } from '@apollo/client'
 
 const About: React.FC<IPage> = ({data}: any) => {
-  const page = parseGraphQlResponse(data?.page)
+  // const page = parseGraphQlResponse(data?.page)
+  const { page } = data
+  const pageContent = tryParseJSONObject(page?.content)
   const { t, i18n } = useTranslation('common');
 
   const { data: ajaxData, loading, error } = useQuery(GetPage,{
@@ -20,7 +22,7 @@ const About: React.FC<IPage> = ({data}: any) => {
       slug: 'about',
     },
   })
-  const ajaxData2 = parseGraphQlResponse(ajaxData?.page)
+  const ajaxData2 = tryParseJSONObject(!loading && ajaxData?.page)
 
   // if (loading) return <p>Loading...</p>;
   // if (error) return <p>Error...</p>;
@@ -33,9 +35,9 @@ const About: React.FC<IPage> = ({data}: any) => {
       />
 
       <div className={styles.about}>
-        <p>{ page?.id }</p>
-        <p>{ page?.slug }</p>
-        <p>{ page?.title }</p>
+        <p>id- { page?.id }</p>
+        <p>slug- { page?.slug }</p>
+        <p>title- { page?.title }</p>
 
         {/*{qqq?.page.slug && !loading && (*/}
         {/*  <h2>useQuery: {qqq?.page.slug}</h2>*/}
@@ -46,7 +48,7 @@ const About: React.FC<IPage> = ({data}: any) => {
         <p>t h1: {t('h1')}</p>
 
         <div className={classNames(styles.about, 'foo', 'bar')}>
-          <div dangerouslySetInnerHTML={{ __html: page?.content?.description }}/>
+          <div dangerouslySetInnerHTML={{ __html: pageContent?.description }}/>
         </div>
       </div>
     </>

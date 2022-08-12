@@ -1,5 +1,5 @@
 import React from "react";
-import About, { getServerSideProps as AboutComponentGetServerSideProps } from "@components/pages/about";
+import About, { getServerSideProps as ChildrenGetServerSideProps } from "@components/pages/about";
 import serverProps from "../src/lib/serverProps";
 import Layout from "@components/layouts/layout";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -20,7 +20,7 @@ export async function getServerSideProps({ ctx, locale }: any) {
     props: {
       ...(await serverProps(locale)),
       ...(await serverSideTranslations(locale, ['common', 'menu'])),
-      data: await AboutComponentGetServerSideProps(ctx, locale)
+      data: await ChildrenGetServerSideProps(ctx, locale)
     },
   }
 }

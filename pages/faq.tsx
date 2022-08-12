@@ -1,14 +1,14 @@
 import React from "react";
-import MainPage, { getServerSideProps as ChildrenGetServerSideProps } from "@components/pages/main-page";
+import Faq, { getServerSideProps as ChildrenGetServerSideProps } from "@components/pages/faq";
 import serverProps from "../src/lib/serverProps";
 import Layout from "@components/layouts/layout";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const Page: React.FC = ({serverProps, data, ctx}: any) => {
 
   return (
     <Layout serverProps={serverProps}>
-      <MainPage data={data}/>
+      <Faq data={data}/>
     </Layout>
   );
 };
@@ -24,4 +24,3 @@ export async function getServerSideProps({ ctx, locale }: any) {
     },
   }
 }
-
