@@ -1,17 +1,29 @@
 import React from 'react';
-import { getApolloClient } from "@services/graphql/conf/apolloClient";
+import { initializeApollo } from "@services/graphql/conf/apollo";
 import styles from "./index.module.scss";
 import classNames from "classnames";
 import { NextSeo } from 'next-seo';
-import { tryParseJSONObject } from "../../../helpers/string";
+import { tryParseJSONObject, tryParseJSONString, parseGraphQlResponse } from "../../../helpers/string";
 import { IPage } from "@components/pages/type"
 import { GetPage } from "@components/pages/graphql";
 import { useTranslation, Trans } from 'next-i18next';
+import { useQuery } from '@apollo/client'
 
-const About: React.FC<IPage> = ({data}) => {
-  const page = data.page;
-  const content = page && tryParseJSONObject(page.content);
-  const { t } = useTranslation('common');
+const About: React.FC<IPage> = ({data}: any) => {
+  const page = parseGraphQlResponse(data?.page)
+  const { t, i18n } = useTranslation('common');
+
+  const { data: ajaxData, loading, error } = useQuery(GetPage,{
+    client: initializeApollo(i18n.language),
+    ssr: false,
+    variables: {
+      slug: 'about',
+    },
+  })
+  const ajaxData2 = parseGraphQlResponse(ajaxData?.page)
+
+  // if (loading) return <p>Loading...</p>;
+  // if (error) return <p>Error...</p>;
 
   return (
     <>
@@ -21,18 +33,20 @@ const About: React.FC<IPage> = ({data}) => {
       />
 
       <div className={styles.about}>
-        <h1>About</h1>
+        <p>{ page?.id }</p>
+        <p>{ page?.slug }</p>
+        <p>{ page?.title }</p>
 
-        <p>{t('h1')}</p>
+        {/*{qqq?.page.slug && !loading && (*/}
+        {/*  <h2>useQuery: {qqq?.page.slug}</h2>*/}
+        {/*)}*/}
 
-        <Trans i18nKey='h1'>
-          Then you may have a look at <a href='https://locize.com/blog/next-i18next/'>this blog post</a>.
-        </Trans>
+        <p>ajaxData2.title: { ajaxData2?.title }</p>
+
+        <p>t h1: {t('h1')}</p>
 
         <div className={classNames(styles.about, 'foo', 'bar')}>
-          { page?.id }{ page?.title }
-
-          <div dangerouslySetInnerHTML={{ __html: content?.description }}/>
+          <div dangerouslySetInnerHTML={{ __html: page?.content?.description }}/>
         </div>
       </div>
     </>
@@ -41,9 +55,9 @@ const About: React.FC<IPage> = ({data}) => {
 
 export default About;
 
-export async function getServerSideProps(ctx: any) {
+export async function getServerSideProps(ctx: any, locale: any) {
 
-  const apolloClient = getApolloClient()
+  const apolloClient = initializeApollo(locale)
 
   const { data } = await apolloClient.query({
     query: GetPage,

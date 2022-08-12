@@ -3,7 +3,7 @@ import styles from "./index.module.scss";
 import classNames from "classnames";
 import { NextSeo } from 'next-seo';
 import { IPage } from "@components/pages/type"
-import { getApolloClient } from "@services/graphql/conf/apolloClient";
+import { initializeApollo } from "@services/graphql/conf/apollo";
 import { GetPage } from "@components/pages/graphql";
 import { tryParseJSONObject } from "../../../helpers/string";
 
@@ -33,9 +33,9 @@ const MainPage: React.FC<IPage> = ({data}) => {
 
 export default MainPage;
 
-export async function getServerSideProps(ctx: any) {
+export async function getServerSideProps(ctx: any, locale: any) {
 
-  const apolloClient = getApolloClient()
+  const apolloClient = initializeApollo(locale)
 
   const { data } = await apolloClient.query({
     query: GetPage,

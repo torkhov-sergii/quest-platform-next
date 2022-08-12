@@ -18,9 +18,9 @@ export default Home;
 export async function getServerSideProps({ ctx, locale }: any) {
   return {
     props: {
-      ...(await serverProps(ctx)),
+      ...(await serverProps(locale)),
       ...(await serverSideTranslations(locale, ['common', 'menu'])),
-      data: await MainPageComponentGetServerSideProps(ctx)
+      data: await MainPageComponentGetServerSideProps(ctx, locale)
     },
   }
 }

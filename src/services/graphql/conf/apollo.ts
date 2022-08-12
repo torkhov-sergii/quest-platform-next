@@ -14,7 +14,21 @@ const createApolloClient = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-export const initializeApollo = () => {
+const createApolloClientRu = new ApolloClient({
+  ssrMode: typeof window === "undefined",
+  uri: process.env.NEXT_PUBLIC_ENV_APP_GRAPHQL+'?locale=ru',
+  cache: new InMemoryCache(),
+});
+
+export const initializeApollo = (locale?: any) => {
+  // TODO найти лучшее решение
+  if(locale === 'ru') {
+    return createApolloClientRu;
+  }
+  if(locale === 'en') {
+    return createApolloClient;
+  }
+
   // For SSG and SSR always create a new Apollo Client
   if (typeof window === "undefined") {
     return createApolloClient;
