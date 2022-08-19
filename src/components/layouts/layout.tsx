@@ -12,9 +12,7 @@ const Layout: React.FC<Layout> = ({ children, serverProps }) => {
       <GlobalLayoutContext.Provider value={serverProps}>
         <Header />
 
-        <div className={`env-${process.env.NEXT_PUBLIC_ENV_MODE}`}>
-          {children}
-        </div>
+        <div className={`env-${process.env.NEXT_PUBLIC_ENV_MODE}`}>{children}</div>
 
         {/*<Footer/>*/}
       </GlobalLayoutContext.Provider>

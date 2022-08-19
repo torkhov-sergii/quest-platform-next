@@ -7,7 +7,8 @@ import { initializeApollo } from '@services/graphql/conf/apollo';
 import { GetPage } from '@components/pages/graphql';
 import { tryParseJSONObject } from '../../../helpers/string';
 import Button from '@mui/material/Button';
-import { Container } from '@mui/material';
+import { Container, Grid, Paper } from '@mui/material';
+import { Box } from '@mui/system';
 
 const MainPage: React.FC<IPage> = ({ data }) => {
   const page = data.page;
@@ -17,13 +18,37 @@ const MainPage: React.FC<IPage> = ({ data }) => {
     <>
       <NextSeo title="Home" description="Home description" />
 
+      <Container>
+        <Grid container spacing={2}>
+          <Grid item xs="auto">
+            <Paper>xs=8</Paper>
+          </Grid>
+          <Grid item xs>
+            <Paper>xs=4</Paper>
+          </Grid>
+        </Grid>
+      </Container>
+
       <Container fixed>
         <div className={styles.home}>
           <h1>home</h1>
 
-          <Button variant="contained">
-            Hello World
-          </Button>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={8}>
+              <Paper>xs=8</Paper>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Paper>xs=4</Paper>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Paper>xs=4</Paper>
+            </Grid>
+            <Grid item xs={12} md={8}>
+              <Paper>xs=8</Paper>
+            </Grid>
+          </Grid>
+
+          <Button variant="contained">Hello World</Button>
 
           <Button variant="contained" sx={{ width: 300 }} className={styles.button}>
             Hello World
@@ -37,7 +62,6 @@ const MainPage: React.FC<IPage> = ({ data }) => {
           </div>
         </div>
       </Container>
-
     </>
   );
 };

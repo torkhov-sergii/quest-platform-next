@@ -3,10 +3,7 @@ import { initializeApollo } from '@services/graphql/conf/apollo';
 import styles from './index.module.scss';
 import classNames from 'classnames';
 import { NextSeo } from 'next-seo';
-import {
-  tryParseJSONObject,
-  tryParseJSONString,
-} from '../../../helpers/string';
+import { tryParseJSONObject, tryParseJSONString } from '../../../helpers/string';
 import { IPage } from '@components/pages/type';
 import { GetPage } from '@components/pages/graphql';
 import { useTranslation, Trans } from 'next-i18next';

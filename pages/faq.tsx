@@ -1,7 +1,5 @@
 import React from 'react';
-import Faq, {
-  getServerSideProps as ChildrenGetServerSideProps,
-} from '@components/pages/faq';
+import Faq, { getServerSideProps as ChildrenGetServerSideProps } from '@components/pages/faq';
 import serverProps from '../src/lib/serverProps';
 import Layout from '@components/layouts/layout';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';

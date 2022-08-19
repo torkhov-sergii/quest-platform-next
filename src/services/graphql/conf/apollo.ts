@@ -1,10 +1,6 @@
 //next + apollo + ssr https://blog.codepen.io/2021/09/01/331-next-js-apollo-server-side-rendering-ssr/
 
-import {
-  ApolloClient,
-  InMemoryCache,
-  NormalizedCacheObject,
-} from '@apollo/client';
+import { ApolloClient, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | null = null;
 
