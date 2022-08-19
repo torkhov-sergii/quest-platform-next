@@ -7,5 +7,5 @@ module.exports = {
       regex: '.*',
       ttl: 10,
     },
-  ]
-}
+  ],
+};

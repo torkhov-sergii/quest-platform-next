@@ -1,9 +1,9 @@
-import { initializeApollo } from "@services/graphql/conf/apollo";
-import { GetMenu } from "./graphql";
+import { initializeApollo } from '@services/graphql/conf/apollo';
+import { GetMenu } from './graphql';
 
 // For getting global server props and push them to layout and then to context
 export default async function getServerSideProps(locale) {
-  const apolloClient = initializeApollo(locale)
+  const apolloClient = initializeApollo(locale);
 
   // Get mainMenu from Settings Container
   // const { data: mainMenu } = await apolloClient.query({
@@ -16,6 +16,6 @@ export default async function getServerSideProps(locale) {
   return {
     serverProps: {
       // mainMenu: mainMenu
-    }
+    },
   };
 }

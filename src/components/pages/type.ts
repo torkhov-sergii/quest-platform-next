@@ -1,3 +1,3 @@
 export interface IPage {
-  data: any
+  data: any;
 }

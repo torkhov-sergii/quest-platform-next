@@ -1,10 +1,10 @@
-import React from "react";
-import styles from "./index.module.scss";
-import { Logo } from "@components/scss";
-import { GlobalContext } from "../../../../../pages/_app";
-import Link from "next/link";
-import { IMenu } from "@components/layouts/header/Menu/type";
-import { useTranslation } from "next-i18next";
+import React from 'react';
+import styles from './index.module.scss';
+import { Logo } from '@components/scss';
+import { GlobalContext } from '../../../../../pages/_app';
+import Link from 'next/link';
+import { IMenu } from '@components/layouts/header/Menu/type';
+import { useTranslation } from 'next-i18next';
 
 export const Menu: React.FC = () => {
   //const {mainMenu} = React.useContext<any>(GlobalLayoutContext); // example - get serverProps
@@ -15,14 +15,15 @@ export const Menu: React.FC = () => {
 
   return (
     <>
-      <ul className={ styles.menu }>
-        { header && header.map((item: IMenu, index: number) => (
-          <li key={ index }>
-            <Link href={ item.link }>
-              <a>{ item.name }</a>
-            </Link>
-          </li>
-        )) }
+      <ul className={styles.menu}>
+        {header &&
+          header.map((item: IMenu, index: number) => (
+            <li key={index}>
+              <Link href={item.link}>
+                <a>{item.name}</a>
+              </Link>
+            </li>
+          ))}
       </ul>
 
       {/*<ul className={ styles.menu }>*/}

@@ -1,14 +1,15 @@
-import React from "react";
-import About, { getServerSideProps as ChildrenGetServerSideProps } from "@components/pages/about";
-import serverProps from "../src/lib/serverProps";
-import Layout from "@components/layouts/layout";
+import React from 'react';
+import About, {
+  getServerSideProps as ChildrenGetServerSideProps,
+} from '@components/pages/about';
+import serverProps from '../src/lib/serverProps';
+import Layout from '@components/layouts/layout';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-const Page: React.FC = ({serverProps, data, ctx}: any) => {
-
+const Page: React.FC = ({ serverProps, data, ctx }: any) => {
   return (
     <Layout serverProps={serverProps}>
-      <About data={data}/>
+      <About data={data} />
     </Layout>
   );
 };
@@ -20,7 +21,7 @@ export async function getServerSideProps({ ctx, locale }: any) {
     props: {
       ...(await serverProps(locale)),
       ...(await serverSideTranslations(locale, ['common', 'menu'])),
-      data: await ChildrenGetServerSideProps(ctx, locale)
+      data: await ChildrenGetServerSideProps(ctx, locale),
     },
-  }
+  };
 }
