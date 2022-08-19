@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './index.module.scss';
-import { Logo } from '@components/scss';
 import { GlobalContext } from '../../../../../pages/_app';
 import Link from 'next/link';
 import { IMenu } from '@components/layouts/header/Menu/type';
