@@ -10,6 +10,7 @@ import type { NextPage } from 'next';
 import Layout from '@components/layouts/layout';
 import { ThemeProvider } from 'next-themes';
 import { appWithTranslation } from 'next-i18next';
+import { StyledEngineProvider } from '@mui/material/styles';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -38,7 +39,10 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout): JSX.Element {
         <GlobalContext.Provider value={GlobalContextData}>
           <ThemeProvider themes={['red', 'blue']} forcedTheme={'red'}>
             {/*{getLayout(*/}
-            <Component {...pageProps} />
+              {/*MUI CSS injection order https://mui.com/material-ui/guides/interoperability*/}
+              <StyledEngineProvider injectFirst>
+                <Component {...pageProps} />
+              </StyledEngineProvider>
             {/*)}*/}
           </ThemeProvider>
         </GlobalContext.Provider>

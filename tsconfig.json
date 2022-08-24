@@ -28,7 +28,11 @@
       "@redux/*": ["src/redux/*"],
       "@redux": ["src/redux"],
       "@settings/*": ["src/settings/*"],
-      "@settings": ["src/settings"]
+      "@settings": ["src/settings"],
+      "@pages/*": ["src/pages/*"],
+      "@pages": ["src/pages"],
+      "@modules/*": ["modules/*"],
+      "@modules": ["modules"]
     },
     "incremental": true
   },

@@ -1,25 +1,54 @@
 import React from 'react';
-import Faq, { getServerSideProps as ChildrenGetServerSideProps } from '@components/pages/faq';
 import serverProps from '../src/lib/serverProps';
 import Layout from '@components/layouts/layout';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { NextSeo } from 'next-seo';
+import styles from '@styles/pages/faq.module.scss';
+import { initializeApollo } from '@services/graphql/conf/apollo';
+import { GetPage } from '../modules/pages/graphql';
+import { tryParseJSONObject } from '../src/helpers/string';
 
-const Page: React.FC = ({ serverProps, data, ctx }: any) => {
+type Props = {
+  serverProps: any,
+  page: any
+};
+
+const Faq: React.FC<Props> = ({ serverProps, page }) => {
+  const pageContent = tryParseJSONObject(page?.content);
+
   return (
     <Layout serverProps={serverProps}>
-      <Faq data={data} />
+      <NextSeo title="Faq" description="Faq description" />
+
+      <div className={styles.faq}>
+        {pageContent?.faq &&
+          pageContent?.faq?.map((item: any, index: number) => (
+            <div key={index}>
+              <div>{item.question}</div>
+              <div>{item.answer}</div>
+            </div>
+          ))}
+      </div>
     </Layout>
   );
 };
 
-export default Page;
+export default Faq;
 
 export async function getServerSideProps({ ctx, locale }: any) {
+  const apolloClient = initializeApollo(locale);
+
+  const { data: page } = await apolloClient.query({
+    query: GetPage,
+    variables: {
+      slug: 'faq',
+    },
+  });
+
   return {
     props: {
-      ...(await serverProps(locale)),
       ...(await serverSideTranslations(locale, ['common', 'menu'])),
-      data: await ChildrenGetServerSideProps(ctx, locale),
+      page: page.page
     },
   };
 }
