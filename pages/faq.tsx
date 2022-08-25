@@ -7,6 +7,7 @@ import styles from '@styles/pages/faq.module.scss';
 import { initializeApollo } from '@services/graphql/conf/apollo';
 import { GetPage } from '@modules/page/graphql';
 import { tryParseJSONObject } from '../src/helpers/string';
+import { Accordion, AccordionDetails, AccordionSummary, Container, Typography } from '@mui/material';
 
 type Props = {
   serverProps: any,
@@ -20,15 +21,26 @@ const Faq: React.FC<Props> = ({ serverProps, page }) => {
     <Layout serverProps={serverProps}>
       <NextSeo title="Faq" description="Faq description" />
 
-      <div className={styles.faq}>
+      <Container fixed className={styles.faq}>
+        <Typography variant="h2" component="div">
+          FAQ
+        </Typography>
+
         {pageContent?.faq &&
           pageContent?.faq?.map((item: any, index: number) => (
-            <div key={index}>
-              <div>{item.question}</div>
-              <div>{item.answer}</div>
-            </div>
+            <Accordion key={index}>
+              <AccordionSummary
+              >
+                <Typography>{item.question}</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                  {item.answer}
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
           ))}
-      </div>
+      </Container>
     </Layout>
   );
 };
