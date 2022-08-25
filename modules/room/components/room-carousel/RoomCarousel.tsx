@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './index.module.scss';
-import { Room } from '../../../room/types/room';
-import { Card, CardContent, Skeleton, Typography } from '@mui/material';
+import { Room } from '../../types/room';
+import { Card, CardContent, Grid, Skeleton, Typography } from '@mui/material';
 import Link from 'next/link';
 
 interface RoomCarouselProps {
@@ -16,10 +16,11 @@ export const RoomCarousel: React.FC<RoomCarouselProps> = ({ rooms }) => {
           YOU MAY ALSO LIKE
         </Typography>
 
+        <Grid container spacing={2}>
         {rooms &&
           rooms.map((room: Room, index: number) => (
-            <div key={index}>
-              <Card sx={{ maxWidth: '33.33%' }}>
+            <Grid item xs={12} md={4} key={index}>
+              <Card>
                 <CardContent>
                   <Skeleton animation="wave" variant="rectangular" width={'100%'} height={150} />
                   <Typography variant="h4" component="div">
@@ -30,8 +31,9 @@ export const RoomCarousel: React.FC<RoomCarouselProps> = ({ rooms }) => {
                   </Typography>
                 </CardContent>
               </Card>
-            </div>
+            </Grid>
           ))}
+          </Grid>
       </div>
     </>
   );

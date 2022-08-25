@@ -5,7 +5,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { NextSeo } from 'next-seo';
 import styles from '@styles/pages/faq.module.scss';
 import { initializeApollo } from '@services/graphql/conf/apollo';
-import { GetPage } from '../modules/pages/graphql';
+import { GetPage } from '@modules/page/graphql';
 import { tryParseJSONObject } from '../src/helpers/string';
 
 type Props = {

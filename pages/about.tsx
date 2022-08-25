@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { tryParseJSONObject } from '../src/helpers/string';
 import { useTranslation } from 'next-i18next';
 import { useQuery } from '@apollo/client';
-import { GetPage } from '../modules/pages/graphql';
+import { GetPage } from '@modules/page/graphql';
 import { initializeApollo } from '@services/graphql/conf/apollo';
 
 type Props = {

@@ -4,16 +4,16 @@ import React from 'react';
 import Layout from '@components/layouts/layout';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { initializeApollo } from '@services/graphql/conf/apollo';
-import { GetPage } from '../modules/pages/graphql';
-import getRoomsCarousel from '../modules/homepage/services/get-rooms-carousel.service';
+import { GetPage } from '@modules/page/graphql';
+import getRoomsCarouselService from '../modules/room/services/get-rooms-carousel.service';
 import { tryParseJSONObject } from '../src/helpers/string';
 import { NextSeo } from 'next-seo';
 import { Container, Grid, Paper, Slider } from '@mui/material';
 import styles from '@styles/pages/home.module.scss';
 import Button from '@mui/material/Button';
 import classNames from 'classnames';
-import { Room } from '../modules/room/types/room';
-import { RoomCarousel } from '../modules/homepage/components/room-carousel/RoomCarousel';
+import { Room } from '@modules/room/types/room';
+import { RoomCarousel } from '@modules/room/components/room-carousel/RoomCarousel';
 
 type Props = {
   serverProps: any,
@@ -94,7 +94,7 @@ export async function getServerSideProps({ ctx, locale }: any) {
       //...(await serverProps(locale)),
       ...(await serverSideTranslations(locale, ['common', 'menu'])),
       //...(await ChildrenGetServerSideProps(ctx, locale)),
-      rooms: await getRoomsCarousel(ctx, locale),
+      rooms: await getRoomsCarouselService(ctx, locale),
       page: page.page
     },
   };
