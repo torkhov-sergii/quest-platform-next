@@ -14,14 +14,18 @@ import Button from '@mui/material/Button';
 import classNames from 'classnames';
 import { Room } from '@modules/room/types/room';
 import { RoomCarousel } from '@modules/room/components/room-carousel/RoomCarousel';
+import getLastArticlesService from '@modules/article/services/get-last-articles.service';
+import { Article } from '@modules/article/types/article';
+import { LastArticles } from '@modules/article/components/room-carousel/LastArticles';
 
 type Props = {
   serverProps: any,
   page: any
   rooms: Room[],
+  articles: Article[],
 };
 
-const Page: React.FC<Props> = ({ serverProps, page, rooms }) => {
+const Page: React.FC<Props> = ({ serverProps, page, rooms, articles }) => {
   const content = page && tryParseJSONObject(page.content);
 
   return (
@@ -73,6 +77,10 @@ const Page: React.FC<Props> = ({ serverProps, page, rooms }) => {
       <Container>
         <RoomCarousel rooms={rooms}/>
       </Container>
+
+      <Container>
+        <LastArticles articles={articles}/>
+      </Container>
     </Layout>
   );
 };
@@ -95,6 +103,7 @@ export async function getServerSideProps({ ctx, locale }: any) {
       ...(await serverSideTranslations(locale, ['common', 'menu'])),
       //...(await ChildrenGetServerSideProps(ctx, locale)),
       rooms: await getRoomsCarouselService(ctx, locale),
+      articles: await getLastArticlesService(ctx, locale),
       page: page.page
     },
   };
