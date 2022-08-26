@@ -7,7 +7,6 @@ import { ApolloProvider } from '@apollo/client';
 import { Provider } from 'react-redux';
 import store from '@redux/store';
 import type { NextPage } from 'next';
-import Layout from '@components/layouts/layout';
 import { ThemeProvider } from 'next-themes';
 import { appWithTranslation } from 'next-i18next';
 import { StyledEngineProvider } from '@mui/material/styles';

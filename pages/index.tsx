@@ -1,7 +1,7 @@
 import React from 'react';
 // import MainPage, { getServerSideProps as ChildrenGetServerSideProps } from '@pages/main-page';
 // import serverProps from '../src/lib/serverProps';
-import Layout from '@components/layouts/layout';
+import Layout from '@modules/shared/components/layouts/layout';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { initializeApollo } from '@services/graphql/conf/apollo';
 import { GetPage } from '@modules/page/graphql';

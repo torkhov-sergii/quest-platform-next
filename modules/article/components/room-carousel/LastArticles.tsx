@@ -25,7 +25,7 @@ export const LastArticles: React.FC<LastArticlesProps> = ({ articles }) => {
                   <Skeleton animation="wave" variant="rectangular" width={'100%'} height={150} />
 
                   <Typography variant="h4" component="div">
-                    <Link href={article.slug}>{article.title}</Link>
+                    <Link href={`/articles/${article.slug}`}>{article.title}</Link>
                   </Typography>
                 </CardContent>
               </Card>

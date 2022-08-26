@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './index.module.scss';
-import { GlobalContext } from '../../../../../pages/_app';
+import { GlobalContext } from '../../../../../../pages/_app';
 import Link from 'next/link';
-import { IMenu } from '@components/layouts/header/Menu/type';
+import { IMenu } from '@modules/shared/components/layouts/header/Menu/type';
 import { useTranslation } from 'next-i18next';
 
 export const Menu: React.FC = () => {

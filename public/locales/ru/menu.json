@@ -11,6 +11,14 @@
     {
       "name": "Вопросы",
       "link": "faq"
+    },
+    {
+      "name": "Контакты",
+      "link": "contact"
+    },
+    {
+      "name": "Блог",
+      "link": "articles"
     }
   ]
 }

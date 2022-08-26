@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './index.module.scss';
-import { GlobalContext } from '../../../../pages/_app';
+import { GlobalContext } from '../../../../../pages/_app';
 import classNames from 'classnames';
-import { Menu } from '@components/layouts/header/Menu/Menu';
-import LanguageSwitcher from '@components/layouts/header/LanguageSwitcher/LanguageSwitcher';
+import { Menu } from '@modules/shared/components/layouts/header/Menu/Menu';
+import LanguageSwitcher from '@modules/shared/components/layouts/header/LanguageSwitcher/LanguageSwitcher';
 import Image from 'next/image';
 
 export const Header: React.FC = () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import serverProps from '../src/lib/serverProps';
-import Layout from '@components/layouts/layout';
+import Layout from '@modules/shared/components/layouts/layout';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { NextSeo } from 'next-seo';
 import styles from '@styles/pages/faq.module.scss';
