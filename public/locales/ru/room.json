@@ -1,0 +1,88 @@
+{
+  "genres": [
+    {
+      "title": "Spooky",
+      "value": "spooky"
+    },
+    {
+      "title": "SciFi",
+      "value": "sci_fi"
+    },
+    {
+      "title": "Adventure",
+      "value": "adventure"
+    },
+    {
+      "title": "Family",
+      "value": "family"
+    }
+  ],
+  "players": [
+    {
+      "title": "1 игрок",
+      "value": 1
+    },
+    {
+      "title": "2 игрока",
+      "value": 2
+    },
+    {
+      "title": "3 игрока",
+      "value": 3
+    },
+    {
+      "title": "4 игрока",
+      "value": 4
+    },
+    {
+      "title": "5 игрока",
+      "value": 5
+    },
+    {
+      "title": "6 игрока",
+      "value": 6
+    }
+  ],
+  "difficulties": [
+    {
+      "title": "Очень просто",
+      "value": 1
+    },
+    {
+      "title": "Просто",
+      "value": 2
+    },
+    {
+      "title": "Нормально",
+      "value": 3
+    },
+    {
+      "title": "Сложно",
+      "value": 4
+    },
+    {
+      "title": "Очень сложно",
+      "value": 5
+    }
+  ],
+  "fears": [
+    {
+      "title": "Не страшный",
+      "value": "not_spooky"
+    },
+    {
+      "title": "Страшный",
+      "value": "spooky"
+    }
+  ],
+  "locations": [
+    {
+      "title": "Берлин",
+      "value": "berlin"
+    },
+    {
+      "title": "Киев",
+      "value": "kiev"
+    }
+  ]
+}

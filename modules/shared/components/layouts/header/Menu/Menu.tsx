@@ -18,7 +18,7 @@ export const Menu: React.FC = () => {
         {header &&
           header.map((item: IMenu, index: number) => (
             <li key={index}>
-              <Link href={item.link}>
+              <Link href={`/${item.link}`}>
                 <a>{item.name}</a>
               </Link>
             </li>

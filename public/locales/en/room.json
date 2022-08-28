@@ -1,0 +1,88 @@
+{
+  "genres": [
+    {
+      "title": "Spooky",
+      "value": "spooky"
+    },
+    {
+      "title": "SciFi",
+      "value": "sci_fi"
+    },
+    {
+      "title": "Adventure",
+      "value": "adventure"
+    },
+    {
+      "title": "Family",
+      "value": "family"
+    }
+  ],
+  "players": [
+    {
+      "title": "1 player",
+      "value": 1
+    },
+    {
+      "title": "2 players",
+      "value": 2
+    },
+    {
+      "title": "3 players",
+      "value": 3
+    },
+    {
+      "title": "4 players",
+      "value": 4
+    },
+    {
+      "title": "5 players",
+      "value": 5
+    },
+    {
+      "title": "6 players",
+      "value": 6
+    }
+  ],
+  "difficulty": [
+    {
+      "title": "Very easy",
+      "value": 1
+    },
+    {
+      "title": "Easy",
+      "value": 2
+    },
+    {
+      "title": "Normal",
+      "value": 3
+    },
+    {
+      "title": "Hard",
+      "value": 4
+    },
+    {
+      "title": "Very hard",
+      "value": 5
+    }
+  ],
+  "fears": [
+    {
+      "title": "Not Spooky",
+      "value": "not_spooky"
+    },
+    {
+      "title": "Spooky",
+      "value": "spooky"
+    }
+  ],
+  "locations": [
+    {
+      "title": "Berlin",
+      "value": "berlin"
+    },
+    {
+      "title": "Kiev",
+      "value": "kiev"
+    }
+  ]
+}

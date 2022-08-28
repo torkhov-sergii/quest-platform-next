@@ -1,7 +1,8 @@
 import { Location } from '@modules/location/types/location'
+import { Tag } from '@modules/tag/types/tag';
 
 export interface Room {
-  id: string
+  id: number
   title: string
   slug: string
 
@@ -10,7 +11,7 @@ export interface Room {
   players_from: number
   players_to: number
   genre: string
-  difficulty: string
+  difficulty: number
   fear: string
   color: string
 
@@ -25,4 +26,6 @@ export interface Room {
 
   location: Location
   content: JSON
+
+  tags: [Tag]
 }

@@ -4,16 +4,30 @@ import { ApolloClient, InMemoryCache, NormalizedCacheObject } from '@apollo/clie
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | null = null;
 
+// disable cache
+const defaultOptions = {
+  watchQuery: {
+    fetchPolicy: 'cache-and-network',
+    errorPolicy: 'ignore',
+  },
+  query: {
+    fetchPolicy: 'cache-first',
+    errorPolicy: 'all',
+  },
+}
+
 const createApolloClient = new ApolloClient({
   ssrMode: typeof window === 'undefined',
   uri: process.env.NEXT_PUBLIC_ENV_APP_GRAPHQL,
   cache: new InMemoryCache(),
+  // defaultOptions: defaultOptions,
 });
 
 const createApolloClientRu = new ApolloClient({
   ssrMode: typeof window === 'undefined',
   uri: process.env.NEXT_PUBLIC_ENV_APP_GRAPHQL + '?locale=ru',
   cache: new InMemoryCache(),
+  // defaultOptions: defaultOptions,
 });
 
 export const initializeApollo = (locale?: any) => {

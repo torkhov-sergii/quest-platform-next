@@ -25,11 +25,11 @@ function LanguageSwitcher() {
       {/*</select>*/}
 
       <div className={styles.language_switcher}>
-        <Link href={router.pathname} locale="en">
+        <Link href={router.asPath} locale="en">
           <a>en</a>
         </Link>
 
-        <Link href={router.pathname} locale="ru">
+        <Link href={router.asPath} locale="ru">
           <a>ru</a>
         </Link>
       </div>
