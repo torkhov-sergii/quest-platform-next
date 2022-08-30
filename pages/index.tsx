@@ -16,7 +16,7 @@ import { Room } from '@modules/room/types/room';
 import { RoomCarousel } from '@modules/room/components/room-carousel/RoomCarousel';
 import getLastArticlesService from '@modules/article/services/get-last-articles.service';
 import { Article } from '@modules/article/types/article';
-import { LastArticles } from '@modules/article/components/room-carousel/LastArticles';
+import { LastArticles } from '@modules/article/components/last-articles/LastArticles';
 import { RoomsFilter } from '@modules/room/components/rooms-filter/RoomsFilter';
 import { useTranslation } from 'next-i18next';
 import getRoomsFilterService from '@modules/room/services/get-rooms-filter.service';

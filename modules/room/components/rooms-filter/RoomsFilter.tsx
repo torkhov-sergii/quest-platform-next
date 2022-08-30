@@ -16,7 +16,7 @@ import {
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
-import { RoomsFilterSelect } from '@modules/room/components/rooms-filter/RoomsFilterSelect';
+import { RoomsFilterSelect } from '@modules/room/components/rooms-filter/rooms-filter-select/RoomsFilterSelect';
 import { Tag } from '@modules/tag/types/tag';
 import _ from 'lodash';
 import { Box } from '@mui/system';
@@ -151,7 +151,7 @@ export const RoomsFilter: React.FC<RoomsFilterProps> = ({ rooms }) => {
                     <CardContent>
                       <Skeleton animation="wave" variant="rectangular" width={'100%'} height={150} />
                       <Typography variant="h4" component="div">
-                        <Link href={room.slug}>{room.title}</Link>
+                        <Link href={`/room/${room.slug}`}>{room.title}</Link>
                       </Typography>
                       <Typography variant="h5" component="div">
                         {room.duration}min / {room.players_from}-{room.players_to} / {room.difficulty}/10
