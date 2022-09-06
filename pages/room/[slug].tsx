@@ -11,7 +11,7 @@ import { tryParseJSONObject } from '../../src/helpers/string';
 import { GetRoom } from '@modules/room/graphql';
 import { Room } from '@modules/room/types/room';
 import { Tag } from '@modules/tag/types/tag';
-import { RoomSchedule } from '@modules/room/components/schedule/Schedule';
+import { RoomSchedule } from '@modules/room/components/schedule/RoomSchedule';
 
 type Props = {
   serverProps: any;
@@ -26,7 +26,7 @@ const PageRoom: React.FC<Props> = ({ serverProps, room }) => {
       <NextSeo title="Room" description="About description" />
 
       <Container fixed className={styles.room}>
-        <RoomSchedule schedules={room?.schedule} />
+        <RoomSchedule room={room} />
 
         <Typography variant="h2" component="div">
           {room?.title}
@@ -71,6 +71,7 @@ export async function getServerSideProps({ params, locale }: any) {
       column: 'SLUG',
       slug: params.slug,
     },
+    //fetchPolicy: 'no-cache' //отключить кеширование этого запроса
   });
 
   return {

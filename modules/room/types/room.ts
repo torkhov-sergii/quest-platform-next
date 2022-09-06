@@ -36,15 +36,15 @@ export interface Schedule {
   date_from: string
   date_to: string
   description: string
-  week: [Week]
+  week: [ScheduleWeek]
 }
 
-export interface Week {
+export interface ScheduleWeek {
   week_days: [string]
-  time_slots: [Timeslot]
+  time_slots: [ScheduleTimeslot]
 }
 
-export interface Timeslot {
+export interface ScheduleTimeslot {
   time_from: string
   time_to: string
   color: string

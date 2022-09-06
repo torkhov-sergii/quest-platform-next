@@ -22,21 +22,6 @@ export const GetRoom = gql`
                 title
             }
             content
-
-            schedule {
-                date_from
-                date_to
-                description
-                week {
-                    time_slots {
-                        color
-                        price
-                        time_from
-                        time_to
-                    }
-                    week_days
-                }
-            }
             
             tags {
                 id
@@ -71,7 +56,7 @@ export const GetRoomsCarousel = gql`
 `;
 
 export const GetRoomsFilter = gql`
-    query GetRoomsCarousel {
+    query GetRoomsFilter {
         rooms {
             id
             slug
@@ -97,6 +82,30 @@ export const GetRoomsFilter = gql`
                 id
                 slug
                 title
+            }
+        }
+    }
+`;
+
+export const GetRoomSchedule = gql`
+    query GetRoomSchedule($column: RoomColumn, $slug: Mixed) {
+        room(where: { column: $column, value: $slug }) {
+            id
+            slug
+            
+            schedule {
+                date_from
+                date_to
+                description
+                week {
+                    time_slots {
+                        color
+                        price
+                        time_from
+                        time_to
+                    }
+                    week_days
+                }
             }
         }
     }
