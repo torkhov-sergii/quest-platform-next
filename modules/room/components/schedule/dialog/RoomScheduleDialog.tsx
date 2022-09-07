@@ -14,12 +14,11 @@ import { i18n, useTranslation } from 'next-i18next';
 
 interface RoomScheduleDialogProps {
   room: Room
-  date: Date
   timeslot: RoomCalendarDayTimeslot | null;
   timeslotClose: () => void;
 }
 
-export const RoomScheduleDialog: React.FC<RoomScheduleDialogProps> = ({ room, date, timeslot, timeslotClose }) => {
+export const RoomScheduleDialog: React.FC<RoomScheduleDialogProps> = ({ room, timeslot, timeslotClose }) => {
   const { i18n } = useTranslation();
 
   const [name, setName] = useState<string>('')
@@ -48,7 +47,9 @@ export const RoomScheduleDialog: React.FC<RoomScheduleDialogProps> = ({ room, da
       client: initializeApollo(i18n.language),
       variables: {
         room_id: room.id,
-        start: (date && timeslot) ? (format(date, 'Y-MM-dd') + ' ' + format(timeslot.time, 'H:mm:ss')) : null,
+        // start: (date && timeslot) ? (format(date, 'Y-MM-dd') + ' ' + format(timeslot.time, 'H:mm:ss')) : null,
+        // start: timeslot?.start,
+        start: (timeslot) ? format(timeslot?.start, 'Y-MM-dd H:mm:ss') : null,
         status: 'new',
         players: players,
         price_final: 12345,
@@ -108,7 +109,7 @@ export const RoomScheduleDialog: React.FC<RoomScheduleDialogProps> = ({ room, da
                   </Select>
                 </FormControl>
 
-                <Typography gutterBottom>{format(date, 'MMMM dd')} {format(timeslot.time, 'H:mm')}</Typography>
+                <Typography gutterBottom>{format(timeslot.start, 'MMMM dd H:mm')}</Typography>
 
                 <Typography gutterBottom>Price per person {timeslot.price}$</Typography>
               </Grid>

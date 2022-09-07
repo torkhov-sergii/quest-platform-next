@@ -9,7 +9,7 @@ export interface RoomCalendarDay {
 }
 
 export interface RoomCalendarDayTimeslot {
-  time: Date
+  start: Date
   color?: string
   price?: number
 }

@@ -33,4 +33,15 @@ export const createTimeslot = gql`
     }
 `;
 
+export const GetTimeslots = gql`
+    query GetTimeslots($from: Mixed!, $to: Mixed!) {
+        timeslots(where: {
+            column: START, operator: GTE, value: $from, AND: {column: START, operator: LTE, value: $to}
+        }) {
+            id
+            start
+            status
+        }
+    }
+`;
 
