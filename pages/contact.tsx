@@ -7,10 +7,11 @@ import { tryParseJSONObject } from '../src/helpers/string';
 import { GetPage } from '@modules/page/graphql';
 import { initializeApollo } from '@services/graphql/conf/apollo';
 import { Container, Typography } from '@mui/material';
+import ContactForm from '@modules/notification/components/contact-form/ContactForm';
 
 type Props = {
-  serverProps: any,
-  page: any
+  serverProps: any;
+  page: any;
 };
 
 const Contact: React.FC<Props> = ({ serverProps, page }) => {
@@ -21,15 +22,13 @@ const Contact: React.FC<Props> = ({ serverProps, page }) => {
       <NextSeo title="Contact page" description="Contact page description" />
 
       <Container fixed className={styles.contact}>
-
         <Typography variant="h2" component="div">
           {page?.title}
         </Typography>
 
-        <Typography>
-          {pageContent?.description}
-        </Typography>
+        <Typography>{pageContent?.description}</Typography>
 
+        <ContactForm />
       </Container>
     </Layout>
   );
@@ -50,7 +49,7 @@ export async function getServerSideProps({ ctx, locale }: any) {
   return {
     props: {
       ...(await serverSideTranslations(locale, ['common', 'menu'])),
-      page: page.page
+      page: page.page,
     },
   };
 }
