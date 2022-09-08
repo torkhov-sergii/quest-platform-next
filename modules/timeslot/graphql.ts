@@ -29,6 +29,10 @@ export const createTimeslot = gql`
             }
         ) {
             id
+            order {
+                id
+                secret_key
+            }
         }
     }
 `;

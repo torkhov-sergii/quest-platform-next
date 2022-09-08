@@ -47,6 +47,7 @@ export const RoomSchedule: React.FC<RoomScheduleProps> = ({ room }) => {
     setDateTo(addDays(dateTo, -7))
   }
 
+  // Fetch timeslots for period between dateFrom, dateTo
   useEffect (() => {
     generateSchedule()
 
@@ -78,6 +79,7 @@ export const RoomSchedule: React.FC<RoomScheduleProps> = ({ room }) => {
     setTimeslot(null)
   }
 
+  // Генерировать расписание слотов dateFrom, dateTo, room.schedule
   function generateSchedule() {
     let RoomCalendarDays: RoomCalendarDay[] = [];
 

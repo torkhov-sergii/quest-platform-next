@@ -16,12 +16,13 @@ export const GetRoom = gql`
             fear
             color
 
+            content
+            
             location {
                 id
                 slug
                 title
             }
-            content
             
             tags {
                 id

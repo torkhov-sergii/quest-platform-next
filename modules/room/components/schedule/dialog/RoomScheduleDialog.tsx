@@ -11,6 +11,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { GetPage } from '@modules/page/graphql';
 import { initializeApollo } from '@services/graphql/conf/apollo';
 import { i18n, useTranslation } from 'next-i18next';
+import Link from 'next/link';
 
 interface RoomScheduleDialogProps {
   room: Room
@@ -21,11 +22,11 @@ interface RoomScheduleDialogProps {
 export const RoomScheduleDialog: React.FC<RoomScheduleDialogProps> = ({ room, timeslot, timeslotClose }) => {
   const { i18n } = useTranslation();
 
-  const [name, setName] = useState<string>('')
-  const [phone, setPhone] = useState<string>('')
-  const [email, setEmail] = useState<string>('')
+  const [name, setName] = useState<string>('test')
+  const [phone, setPhone] = useState<string>('123-456-789')
+  const [email, setEmail] = useState<string>('test@test.com')
   const [promo, setPromo] = useState('')
-  const [comment, setComment] = useState<string>('')
+  const [comment, setComment] = useState<string>('test comment')
   const [players, setPlayers] = useState<any>(room.players_from)
 
   const handleClose = () => {
@@ -68,12 +69,12 @@ export const RoomScheduleDialog: React.FC<RoomScheduleDialogProps> = ({ room, ti
     })
   }
 
-  useEffect (() => {
-    // Your code to triggered when we get the data from graphql
-    if (submitData){
-      console.log(submitData.createTimeslot.id);
-    }
-  }, [submitData])
+  // useEffect (() => {
+  //   // Your code to triggered when we get the data from graphql
+  //   if (submitData){
+  //     console.log(submitData.createTimeslot);
+  //   }
+  // }, [submitData])
 
   const playersOption = () => (
     Array.from({length: room.players_to}, (_, i) => i + room.players_from)
@@ -128,7 +129,9 @@ export const RoomScheduleDialog: React.FC<RoomScheduleDialogProps> = ({ room, ti
           )}
 
           {submitData && (
-            <div>Booking created</div>
+            <>
+              <Link href={`/thanks-for-booking/${submitData?.createTimeslot?.order?.secret_key}`}>Thanks For Booking</Link>
+            </>
           )}
         </DialogContent>
       </BootstrapDialog>
