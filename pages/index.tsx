@@ -95,7 +95,7 @@ export async function getServerSideProps({ ctx, locale }: any) {
       ...(await serverSideTranslations(locale, ['common', 'menu', 'room'])),
       //...(await ChildrenGetServerSideProps(ctx, locale)),
       roomsCarousel: await getRoomsCarouselService(ctx, locale),
-      roomsFilter: await getRoomsFilterService(ctx, locale),
+      roomsFilter: await getRoomsFilterService(locale),
       articles: await getLastArticlesService(ctx, locale),
       page: page.page,
     },

@@ -6,60 +6,51 @@ import { RoomCalendarDayTimeslot } from '@modules/room/types/calendar';
 import { BootstrapDialog } from '@modules/shared/components/dialog/DialogContent';
 import { Room } from '@modules/room/types/room';
 import Select from '@mui/material/Select';
-import { createTimeslot } from '@modules/timeslot/graphql';
+import { createTimeslot, updateTimeslot } from '@modules/timeslot/graphql';
 import { useMutation, useQuery } from '@apollo/client';
 import { GetPage } from '@modules/page/graphql';
 import { initializeApollo } from '@services/graphql/conf/apollo';
 import { i18n, useTranslation } from 'next-i18next';
 import Link from 'next/link';
+import { Timeslot } from '@modules/timeslot/types/timeslot';
 
-interface RoomScheduleDialogProps {
-  room: Room
-  timeslot: RoomCalendarDayTimeslot | null;
+interface AdminRoomScheduleDialogProps {
+  timeslot: Timeslot;
   timeslotClose: () => void;
   updateTimeslotById: (int) => void
 }
 
-export const RoomScheduleDialog: React.FC<RoomScheduleDialogProps> = ({ room, timeslot, timeslotClose, updateTimeslotById }) => {
+export const AdminRoomScheduleDialog: React.FC<AdminRoomScheduleDialogProps> = ({ timeslot, timeslotClose, updateTimeslotById }) => {
   const { i18n } = useTranslation();
 
-  const [name, setName] = useState<string>('test')
-  const [phone, setPhone] = useState<string>('123-456-789')
-  const [email, setEmail] = useState<string>('test@test.com')
+  const [name, setName] = useState<string>(timeslot.order?.customer.name)
+  const [phone, setPhone] = useState<string>(timeslot.order?.customer.phone)
+  const [email, setEmail] = useState<string>(timeslot.order?.customer.email)
   const [promo, setPromo] = useState('')
-  const [comment, setComment] = useState<string>('test comment')
-  const [players, setPlayers] = useState<any>(room.players_from)
+  const [comment, setComment] = useState<string>(timeslot.order?.customer_comment)
+  const [adminComment, setAdminComment] = useState<string>(timeslot.order?.comment)
+  const [players, setPlayers] = useState<any>(timeslot.players)
+  const [status, setStatus] = useState<any>(timeslot.status)
 
   const handleClose = () => {
     timeslotClose();
   };
 
-  // const [handleSubmit, {data: submitData, loading: submitLoading, error: submitError}] = useMutation(createTimeslot, {
-  //   client: initializeApollo(i18n.language),
-  //   variables: {
-  //     start: '2022-08-27 10:55:28',
-  //     status: 'new',
-  //   }
-  // })
-
-  const [handleSubmit, {data: submitData, loading: submitLoading, error: submitError}] = useMutation(createTimeslot)
+  const [handleSubmit, {data: submitData, loading: submitLoading, error: submitError}] = useMutation(updateTimeslot)
 
   const submit = () => {
     handleSubmit({
       client: initializeApollo(i18n.language),
       variables: {
-        room_id: room.id,
-        // start: (date && timeslot) ? (format(date, 'Y-MM-dd') + ' ' + format(timeslot.time, 'H:mm:ss')) : null,
-        // start: timeslot?.start,
-        start: (timeslot) ? format(timeslot?.start, 'Y-MM-dd H:mm:ss') : null,
-        status: 'new',
+        id: timeslot.id,
+        room_id: timeslot.room_id,
+        start: (timeslot) ? format(timeslot?.start2, 'Y-MM-dd H:mm:ss') : null,
+        status: status,
         players: players,
-        price_final: 12345,
-        price: timeslot?.price,
-        players_from: room.players_from,
-        players_to: room.players_to,
+        price_final: 5555,
         order: {
-          comment: comment
+          comment: adminComment,
+          customer_comment: comment
         },
         customer: {
           email: email,
@@ -71,31 +62,38 @@ export const RoomScheduleDialog: React.FC<RoomScheduleDialogProps> = ({ room, ti
   }
 
   useEffect (() => {
-    if(submitData) {
-      updateTimeslotById(submitData?.createTimeslot.id)
-    }
+    updateTimeslotById(timeslot.id)
   }, [submitData])
 
   const playersOption = () => (
-    Array.from({length: room.players_to}, (_, i) => i + room.players_from)
+    Array.from({length: timeslot.room.players_to}, (_, i) => i + timeslot.room.players_from)
   )
 
-  // if (submitLoading) return (<>`Submitting...`</>);
-  // if (submitError) return (<>`Submission error! ${submitError.message}`</>);
+  const statusOption = () => (
+    ['new', 'confirmed', 'technical', 'arrived', 'canceled']
+  )
 
   return (
     <>
       <BootstrapDialog onClose={handleClose} open={!!timeslot}>
         <DialogContent>
+          <Typography variant="h4" component="div">
+            Edit booking by Admin
+          </Typography>
+
           {timeslot && (
             <>
             <Grid container spacing={2}>
               <Grid item xs={12} md={6}>
                 <Typography variant="h4" component="div">
-                  {room?.title}
+                  timeslot id: {timeslot.id}
+                </Typography>
+
+                <Typography variant="h4" component="div">
+                  {timeslot.room?.title}
                 </Typography>
                 <Typography variant="h6" component="div">
-                  {room?.location?.title}
+                  {timeslot.room?.location?.title}
                 </Typography>
 
                 <FormControl fullWidth>
@@ -110,7 +108,19 @@ export const RoomScheduleDialog: React.FC<RoomScheduleDialogProps> = ({ room, ti
                   </Select>
                 </FormControl>
 
-                <Typography gutterBottom>{format(timeslot.start, 'MMMM dd H:mm')}</Typography>
+                <FormControl fullWidth>
+                  <InputLabel>Status</InputLabel>
+                  <Select value={status} label='Status' onChange={(event) => setStatus(event.target.value)}>
+                    {statusOption &&
+                      statusOption().map((item: any, index) => (
+                        <MenuItem value={item} key={index}>
+                          {item}
+                        </MenuItem>
+                      ))}
+                  </Select>
+                </FormControl>
+
+                <Typography gutterBottom>{format(timeslot.start2, 'MMMM dd H:mm')}</Typography>
 
                 <Typography gutterBottom>Price per person {timeslot.price}$</Typography>
               </Grid>
@@ -121,8 +131,9 @@ export const RoomScheduleDialog: React.FC<RoomScheduleDialogProps> = ({ room, ti
                 <TextField label="Email" variant="outlined" value={email} onChange={(event) => setEmail(event.target.value)} />
                 <TextField label="Promo" variant="outlined" value={promo} onChange={(event) => setPromo(event.target.value)} />
                 <TextField label="Comment" variant="outlined" value={comment} onChange={(event) => setComment(event.target.value)} />
+                <TextField label="Admin Comment" variant="outlined" value={adminComment} onChange={(event) => setAdminComment(event.target.value)} />
 
-                <Button variant="contained" onClick={() => submit()}>Book a Room</Button>
+                <Button variant="contained" onClick={() => submit()}>Save</Button>
               </Grid>
             </Grid>
             </>
@@ -130,7 +141,7 @@ export const RoomScheduleDialog: React.FC<RoomScheduleDialogProps> = ({ room, ti
 
           {submitData && (
             <>
-              <Link href={`/thanks-for-booking/${submitData?.createTimeslot?.order?.secret_key}`}>Thanks For Booking</Link>
+              Saved
             </>
           )}
         </DialogContent>

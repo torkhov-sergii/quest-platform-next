@@ -1,3 +1,4 @@
+import { Timeslot } from '@modules/timeslot/types/timeslot';
 
 export interface RoomCalendar {
   RoomCalendarDays: RoomCalendarDay[]
@@ -5,11 +6,13 @@ export interface RoomCalendar {
 
 export interface RoomCalendarDay {
   date: Date
-  RoomCalendarDayTimeslots?: RoomCalendarDayTimeslot[] | null
+  RoomCalendarDayTimeslots: RoomCalendarDayTimeslot[] | []
 }
 
 export interface RoomCalendarDayTimeslot {
   start: Date
   color?: string
   price?: number
+
+  timeslot?: Timeslot
 }
