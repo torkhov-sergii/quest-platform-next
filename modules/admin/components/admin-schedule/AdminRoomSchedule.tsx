@@ -172,7 +172,7 @@ export const AdminRoomSchedule: React.FC<AdminRoomScheduleProps> = ({ dateFromJo
                     <div key={index}>
                       <Button className={styles.timeslot} onClick={() => timeslotOpen(calendarTimeslot)} variant="contained" color={timeslotColor(calendarTimeslot)}>
                         <Typography component="div">
-                          {format(calendarTimeslot.start, 'H:mm')} - {calendarTimeslot.price}$ - {calendarTimeslot?.timeslot?.status}
+                          {format(calendarTimeslot.start, 'H:mm')} - {calendarTimeslot.price}$ - {calendarTimeslot?.timeslot?.players}pl - {calendarTimeslot?.timeslot?.status}
                         </Typography>
                       </Button>
                     </div>

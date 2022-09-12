@@ -6,7 +6,7 @@ import { RoomCalendarDayTimeslot } from '@modules/room/types/calendar';
 import { BootstrapDialog } from '@modules/shared/components/dialog/DialogContent';
 import { Room } from '@modules/room/types/room';
 import Select from '@mui/material/Select';
-import { createTimeslot, updateTimeslot } from '@modules/timeslot/graphql';
+import { createTimeslot, GetFinalPrice, updateTimeslot } from '@modules/timeslot/graphql';
 import { useMutation, useQuery } from '@apollo/client';
 import { GetPage } from '@modules/page/graphql';
 import { initializeApollo } from '@services/graphql/conf/apollo';
@@ -22,15 +22,17 @@ interface AdminRoomScheduleDialogProps {
 
 export const AdminRoomScheduleDialog: React.FC<AdminRoomScheduleDialogProps> = ({ timeslot, timeslotClose, updateTimeslotById }) => {
   const { i18n } = useTranslation();
+  const apolloClient = initializeApollo(i18n.language);
 
   const [name, setName] = useState<string>(timeslot.order?.customer.name)
   const [phone, setPhone] = useState<string>(timeslot.order?.customer.phone)
   const [email, setEmail] = useState<string>(timeslot.order?.customer.email)
   const [promo, setPromo] = useState('')
-  const [comment, setComment] = useState<string>(timeslot.order?.customer_comment)
-  const [adminComment, setAdminComment] = useState<string>(timeslot.order?.comment)
+  const [customerComment, setCustomerComment] = useState<string>(timeslot.order?.customer_comment)
+  const [comment, setComment] = useState<string>(timeslot.order?.comment)
   const [players, setPlayers] = useState<any>(timeslot.players)
   const [status, setStatus] = useState<any>(timeslot.status)
+  const [finalPrice, setfinalPrice] = useState<any>(null)
 
   const handleClose = () => {
     timeslotClose();
@@ -47,10 +49,10 @@ export const AdminRoomScheduleDialog: React.FC<AdminRoomScheduleDialogProps> = (
         start: (timeslot) ? format(timeslot?.start2, 'Y-MM-dd H:mm:ss') : null,
         status: status,
         players: players,
-        price_final: 5555,
+        price_final: finalPrice,
         order: {
-          comment: adminComment,
-          customer_comment: comment
+          comment: comment,
+          customer_comment: customerComment
         },
         customer: {
           email: email,
@@ -64,6 +66,24 @@ export const AdminRoomScheduleDialog: React.FC<AdminRoomScheduleDialogProps> = (
   useEffect (() => {
     updateTimeslotById(timeslot.id)
   }, [submitData])
+
+  // Calc final price
+  useEffect (() => {
+    setfinalPrice(null)
+
+    apolloClient.query({
+      query: GetFinalPrice,
+      variables: {
+        room_id: timeslot.room_id,
+        start: (timeslot) ? format(timeslot?.start2, 'Y-MM-dd H:mm:ss') : null,
+        players: players,
+        price: timeslot?.price,
+      },
+      fetchPolicy: 'no-cache' //отключить кеширование этого запроса
+    }).then(({data, loading}) => {
+      setfinalPrice(data.finalPrice)
+    })
+  }, [players])
 
   const playersOption = () => (
     Array.from({length: timeslot.room.players_to}, (_, i) => i + timeslot.room.players_from)
@@ -123,6 +143,7 @@ export const AdminRoomScheduleDialog: React.FC<AdminRoomScheduleDialogProps> = (
                 <Typography gutterBottom>{format(timeslot.start2, 'MMMM dd H:mm')}</Typography>
 
                 <Typography gutterBottom>Price per person {timeslot.price}$</Typography>
+                <Typography gutterBottom>Final price {finalPrice}$</Typography>
               </Grid>
 
               <Grid item xs={12} md={6}>
@@ -130,10 +151,10 @@ export const AdminRoomScheduleDialog: React.FC<AdminRoomScheduleDialogProps> = (
                 <TextField label="Phone" variant="outlined" value={phone} onChange={(event) => setPhone(event.target.value)} />
                 <TextField label="Email" variant="outlined" value={email} onChange={(event) => setEmail(event.target.value)} />
                 <TextField label="Promo" variant="outlined" value={promo} onChange={(event) => setPromo(event.target.value)} />
-                <TextField label="Comment" variant="outlined" value={comment} onChange={(event) => setComment(event.target.value)} />
-                <TextField label="Admin Comment" variant="outlined" value={adminComment} onChange={(event) => setAdminComment(event.target.value)} />
+                <TextField label="Admin Comment" variant="outlined" value={comment} onChange={(event) => setComment(event.target.value)} />
+                <TextField label="Customer Comment" variant="outlined" value={customerComment} onChange={(event) => setCustomerComment(event.target.value)} />
 
-                <Button variant="contained" onClick={() => submit()}>Save</Button>
+                <Button disabled={!finalPrice} variant="contained" onClick={() => submit()}>Save</Button>
               </Grid>
             </Grid>
             </>

@@ -74,6 +74,7 @@ export const GetTimeslots = gql`
             id
             start
             status
+            players
         }
     }
 `;
@@ -116,3 +117,21 @@ export const GetTimeslot = gql`
     }
 `;
 
+export const GetFinalPrice = gql`
+    query GetFinalPrice(
+        $id: ID
+        $room_id: Int!,
+        $start: String!,
+        $players: Int!,
+        $price: Int!,
+    ) {
+        finalPrice(id: $id,
+            input: {
+                room_id: $room_id,
+                start: $start
+                players: $players,
+                price: $price,
+            }
+        )
+    }
+`;

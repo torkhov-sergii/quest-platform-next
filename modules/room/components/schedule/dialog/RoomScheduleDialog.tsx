@@ -6,7 +6,7 @@ import { RoomCalendarDayTimeslot } from '@modules/room/types/calendar';
 import { BootstrapDialog } from '@modules/shared/components/dialog/DialogContent';
 import { Room } from '@modules/room/types/room';
 import Select from '@mui/material/Select';
-import { createTimeslot } from '@modules/timeslot/graphql';
+import { createTimeslot, GetFinalPrice, GetTimeslots } from '@modules/timeslot/graphql';
 import { useMutation, useQuery } from '@apollo/client';
 import { GetPage } from '@modules/page/graphql';
 import { initializeApollo } from '@services/graphql/conf/apollo';
@@ -22,6 +22,7 @@ interface RoomScheduleDialogProps {
 
 export const RoomScheduleDialog: React.FC<RoomScheduleDialogProps> = ({ room, timeslot, timeslotClose, updateTimeslotById }) => {
   const { i18n } = useTranslation();
+  const apolloClient = initializeApollo(i18n.language);
 
   const [name, setName] = useState<string>('test')
   const [phone, setPhone] = useState<string>('123-456-789')
@@ -29,6 +30,7 @@ export const RoomScheduleDialog: React.FC<RoomScheduleDialogProps> = ({ room, ti
   const [promo, setPromo] = useState('')
   const [comment, setComment] = useState<string>('test comment')
   const [players, setPlayers] = useState<any>(room.players_from)
+  const [finalPrice, setfinalPrice] = useState<any>(null)
 
   const handleClose = () => {
     timeslotClose();
@@ -49,12 +51,11 @@ export const RoomScheduleDialog: React.FC<RoomScheduleDialogProps> = ({ room, ti
       client: initializeApollo(i18n.language),
       variables: {
         room_id: room.id,
-        // start: (date && timeslot) ? (format(date, 'Y-MM-dd') + ' ' + format(timeslot.time, 'H:mm:ss')) : null,
         // start: timeslot?.start,
         start: (timeslot) ? format(timeslot?.start, 'Y-MM-dd H:mm:ss') : null,
         status: 'new',
         players: players,
-        price_final: 12345,
+        price_final: finalPrice,
         price: timeslot?.price,
         players_from: room.players_from,
         players_to: room.players_to,
@@ -75,6 +76,24 @@ export const RoomScheduleDialog: React.FC<RoomScheduleDialogProps> = ({ room, ti
       updateTimeslotById(submitData?.createTimeslot.id)
     }
   }, [submitData])
+
+  // Calc final price
+  useEffect (() => {
+    setfinalPrice(null)
+
+    apolloClient.query({
+      query: GetFinalPrice,
+      variables: {
+        room_id: room.id,
+        start: (timeslot) ? format(timeslot?.start, 'Y-MM-dd H:mm:ss') : null,
+        players: players,
+        price: timeslot?.price,
+      },
+      fetchPolicy: 'no-cache' //отключить кеширование этого запроса
+    }).then(({data, loading}) => {
+      setfinalPrice(data.finalPrice)
+    })
+  }, [players])
 
   const playersOption = () => (
     Array.from({length: room.players_to}, (_, i) => i + room.players_from)
@@ -113,6 +132,7 @@ export const RoomScheduleDialog: React.FC<RoomScheduleDialogProps> = ({ room, ti
                 <Typography gutterBottom>{format(timeslot.start, 'MMMM dd H:mm')}</Typography>
 
                 <Typography gutterBottom>Price per person {timeslot.price}$</Typography>
+                <Typography gutterBottom>Final price {finalPrice}$</Typography>
               </Grid>
 
               <Grid item xs={12} md={6}>
@@ -122,7 +142,7 @@ export const RoomScheduleDialog: React.FC<RoomScheduleDialogProps> = ({ room, ti
                 <TextField label="Promo" variant="outlined" value={promo} onChange={(event) => setPromo(event.target.value)} />
                 <TextField label="Comment" variant="outlined" value={comment} onChange={(event) => setComment(event.target.value)} />
 
-                <Button variant="contained" onClick={() => submit()}>Book a Room</Button>
+                <Button disabled={!finalPrice} variant="contained" onClick={() => submit()}>Book a Room</Button>
               </Grid>
             </Grid>
             </>
