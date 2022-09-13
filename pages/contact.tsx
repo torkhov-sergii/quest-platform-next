@@ -8,13 +8,18 @@ import { GetPage } from '@modules/page/graphql';
 import { initializeApollo } from '@services/graphql/conf/apollo';
 import { Container, Typography } from '@mui/material';
 import ContactForm from '@modules/notification/components/contact-form/ContactForm';
+import { GoogleMapComponent } from "@modules/location/components/google-map/GoogleMapComponent";
+import getLastArticlesService from "@modules/article/services/get-last-articles.service";
+import getLocationsService from "@modules/location/services/get-locations.service";
+import { Location } from "@modules/location/types/location";
 
 type Props = {
   serverProps: any;
   page: any;
+  locations: Location[];
 };
 
-const Contact: React.FC<Props> = ({ serverProps, page }) => {
+const Contact: React.FC<Props> = ({ serverProps, page, locations }) => {
   const pageContent = tryParseJSONObject(page?.content);
 
   return (
@@ -29,6 +34,8 @@ const Contact: React.FC<Props> = ({ serverProps, page }) => {
         <Typography>{pageContent?.description}</Typography>
 
         <ContactForm />
+
+        <GoogleMapComponent locations={locations}/>
       </Container>
     </Layout>
   );
@@ -49,6 +56,7 @@ export async function getServerSideProps({ ctx, locale }: any) {
   return {
     props: {
       ...(await serverSideTranslations(locale, ['common', 'menu'])),
+      locations: await getLocationsService(ctx, locale),
       page: page.page,
     },
   };

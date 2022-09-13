@@ -20,6 +20,9 @@ import { LastArticles } from '@modules/article/components/last-articles/LastArti
 import { RoomsFilter } from '@modules/room/components/rooms-filter/RoomsFilter';
 import { useTranslation } from 'next-i18next';
 import getRoomsFilterService from '@modules/room/services/get-rooms-filter.service';
+import { GoogleMapComponent } from "@modules/location/components/google-map/GoogleMapComponent";
+import getLocationsService from "@modules/location/services/get-locations.service";
+import { Location } from "@modules/location/types/location";
 
 type Props = {
   serverProps: any;
@@ -27,9 +30,10 @@ type Props = {
   roomsCarousel: Room[];
   roomsFilter: Room[];
   articles: Article[];
+  locations: Location[];
 };
 
-const Page: React.FC<Props> = ({ serverProps, page, roomsCarousel, roomsFilter, articles }) => {
+const Page: React.FC<Props> = ({ serverProps, page, roomsCarousel, roomsFilter, articles, locations }) => {
   const content = page && tryParseJSONObject(page.content);
   // const { t } = useTranslation('room');
 
@@ -73,6 +77,8 @@ const Page: React.FC<Props> = ({ serverProps, page, roomsCarousel, roomsFilter, 
       <Container>
         <LastArticles articles={articles} />
       </Container>
+
+      <GoogleMapComponent locations={locations}/>
     </Layout>
   );
 };
@@ -97,6 +103,7 @@ export async function getServerSideProps({ ctx, locale }: any) {
       roomsCarousel: await getRoomsCarouselService(ctx, locale),
       roomsFilter: await getRoomsFilterService(locale),
       articles: await getLastArticlesService(ctx, locale),
+      locations: await getLocationsService(ctx, locale),
       page: page.page,
     },
   };
