@@ -66,10 +66,31 @@ export const updateTimeslot = gql`
     }
 `;
 
+export const cancelTimeslot = gql`
+    mutation cancelTimeslot(
+        $id: ID!, 
+    ) {
+        cancelTimeslot(
+            id: $id,
+        ) {
+            id
+        }
+    }
+`;
+
 export const GetTimeslots = gql`
     query GetTimeslots($from: Mixed!, $to: Mixed!, $room_id: Mixed!) {
         timeslots(where: {
-            column: START, operator: GTE, value: $from, AND: {column: START, operator: LTE, value: $to, AND: {column: ROOM_ID, value: $room_id}}
+            column: START, operator: GTE, value: $from, 
+            AND: {
+                column: START, operator: LTE, value: $to, 
+                AND: {
+                    column: ROOM_ID, value: $room_id, 
+                    AND: {
+                        column: STATUS, operator: NEQ, value: "canceled"
+                    }
+                }
+            }
         }) {
             id
             start

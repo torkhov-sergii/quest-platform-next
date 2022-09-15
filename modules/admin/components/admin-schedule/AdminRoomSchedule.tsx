@@ -86,14 +86,12 @@ export const AdminRoomSchedule: React.FC<AdminRoomScheduleProps> = ({ dateFromJo
 
       setSchedule(scheduleGenerated)
     })
-  }, [dateFrom, dateTo])
-
+  }, [dateFrom, dateTo, schedule])
 
   const timeslotColor = (calendarTimeslot) => {
     // return (timeslots.findIndex(timeslot => isSameHour(timeslot.start2, start))) > -1 ? 'success' : 'primary'
     return calendarTimeslot?.timeslot ? 'success' : 'primary'
   }
-
 
   const timeslotOpen = (calendarTimeslot) => {
     let timeslot = calendarTimeslot?.timeslot

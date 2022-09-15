@@ -6,7 +6,7 @@ import { RoomCalendarDayTimeslot } from '@modules/room/types/calendar';
 import { BootstrapDialog } from '@modules/shared/components/dialog/DialogContent';
 import { Room } from '@modules/room/types/room';
 import Select from '@mui/material/Select';
-import { createTimeslot, GetFinalPrice, updateTimeslot } from '@modules/timeslot/graphql';
+import { cancelTimeslot, createTimeslot, GetFinalPrice, updateTimeslot } from "@modules/timeslot/graphql";
 import { useMutation, useQuery } from '@apollo/client';
 import { GetPage } from '@modules/page/graphql';
 import { initializeApollo } from '@services/graphql/conf/apollo';
@@ -35,7 +35,7 @@ export const AdminRoomScheduleDialog: React.FC<AdminRoomScheduleDialogProps> = (
   const [finalPrice, setfinalPrice] = useState<any>(null)
 
   const handleClose = () => {
-    timeslotClose();
+    timeslotClose()
   };
 
   const [handleSubmit, {data: submitData, loading: submitLoading, error: submitError}] = useMutation(updateTimeslot)
@@ -63,9 +63,20 @@ export const AdminRoomScheduleDialog: React.FC<AdminRoomScheduleDialogProps> = (
     })
   }
 
+  const [handleCancel, {data: cancelData, loading: cancelLoading, error: cancelError}] = useMutation(cancelTimeslot)
+
+  const cancel = () => {
+    handleCancel({
+      client: initializeApollo(i18n.language),
+      variables: {
+        id: timeslot.id,
+      }
+    }).then(handleClose)
+  }
+
   useEffect (() => {
     updateTimeslotById(timeslot.id)
-  }, [submitData])
+  }, [submitData, cancelData])
 
   // Calc final price
   useEffect (() => {
@@ -154,6 +165,7 @@ export const AdminRoomScheduleDialog: React.FC<AdminRoomScheduleDialogProps> = (
                 <TextField label="Admin Comment" variant="outlined" value={comment} onChange={(event) => setComment(event.target.value)} />
                 <TextField label="Customer Comment" variant="outlined" value={customerComment} onChange={(event) => setCustomerComment(event.target.value)} />
 
+                <Button variant="contained" color={'error'} onClick={() => cancel()}>Cancel</Button>
                 <Button disabled={!finalPrice} variant="contained" onClick={() => submit()}>Save</Button>
               </Grid>
             </Grid>
