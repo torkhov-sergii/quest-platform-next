@@ -44,6 +44,14 @@ export const GetRoom = gql`
                     week_days
                 }
             }
+
+            preview {
+                url
+            }
+
+            images {
+                url
+            }
         }
     }
 `;
@@ -66,6 +74,10 @@ export const GetRoomsCarousel = gql`
                 id
                 slug
                 title
+            }
+
+            preview {
+                url
             }
         }
     }
@@ -98,6 +110,10 @@ export const GetRoomsFilter = gql`
                 id
                 slug
                 title
+            }
+
+            preview {
+                url
             }
         }
     }

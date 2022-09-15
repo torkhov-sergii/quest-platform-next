@@ -1,5 +1,6 @@
 import { Location } from '@modules/location/types/location'
 import { Tag } from '@modules/tag/types/tag';
+import { Media } from "@modules/media/types/article";
 
 export interface Room {
   id: number
@@ -30,6 +31,9 @@ export interface Room {
   schedule: [Schedule]
 
   tags: [Tag]
+
+  preview: Media
+  images: Media[]
 }
 
 export interface Schedule {

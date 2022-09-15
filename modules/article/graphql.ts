@@ -8,6 +8,10 @@ export const GetLastArticles = gql`
         slug
         title
         content
+
+        preview {
+            url
+        }
       }
     }
   }
@@ -20,6 +24,10 @@ export const GetArticle = gql`
       slug
       title
       content
+
+      preview {
+          url
+      }
     }
   }
 `;

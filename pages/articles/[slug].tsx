@@ -9,6 +9,7 @@ import { GetArticle } from '@modules/article/graphql';
 import { Article } from '@modules/article/types/article';
 import Link from 'next/link';
 import { tryParseJSONObject } from '../../src/helpers/string';
+import Image from "next/image";
 
 type Props = {
   serverProps: any;
@@ -27,6 +28,10 @@ const About: React.FC<Props> = ({ serverProps, article }) => {
         <Typography variant="h2" component="div">
           {article?.title}
         </Typography>
+
+        { article.preview?.url &&
+            <Image src={article.preview?.url} alt="" width={200} height={100} />
+        }
 
         <Typography>
           {pageContent?.description}

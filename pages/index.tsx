@@ -8,7 +8,7 @@ import { GetPage } from '@modules/page/graphql';
 import getRoomsCarouselService from '../modules/room/services/get-rooms-carousel.service';
 import { tryParseJSONObject } from '../src/helpers/string';
 import { NextSeo } from 'next-seo';
-import { Container, Grid, Paper, Slider, Typography } from '@mui/material';
+import { Container, Grid, Paper, Skeleton, Slider, Typography } from "@mui/material";
 import styles from '@styles/pages/home.module.scss';
 import Button from '@mui/material/Button';
 import classNames from 'classnames';
@@ -23,6 +23,7 @@ import getRoomsFilterService from '@modules/room/services/get-rooms-filter.servi
 import { GoogleMapComponent } from "@modules/location/components/google-map/GoogleMapComponent";
 import getLocationsService from "@modules/location/services/get-locations.service";
 import { Location } from "@modules/location/types/location";
+import Image from "next/image";
 
 type Props = {
   serverProps: any;

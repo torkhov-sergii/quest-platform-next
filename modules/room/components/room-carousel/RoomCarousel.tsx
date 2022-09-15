@@ -3,6 +3,7 @@ import styles from './index.module.scss';
 import { Room } from '../../types/room';
 import { Card, CardContent, Grid, Skeleton, Typography } from '@mui/material';
 import Link from 'next/link';
+import Image from "next/image";
 
 interface RoomCarouselProps {
   rooms: Array<Room>;
@@ -22,7 +23,16 @@ export const RoomCarousel: React.FC<RoomCarouselProps> = ({ rooms }) => {
             <Grid item xs={12} md={4} key={index}>
               <Card>
                 <CardContent>
-                  <Skeleton animation="wave" variant="rectangular" width={'100%'} height={150} />
+                  <div style={{width: '100%', height: '100px', position: 'relative'}}>
+                    { room.preview?.url ? (
+                        <Image src={room.preview?.url} alt="" width={'100%'} height={100} layout="fill" objectFit="cover" />
+                      )
+                      : (
+                        <Skeleton animation="wave" variant="rectangular" width={'100%'} height={100} />
+                      )
+                    }
+                  </div>
+
                   <Typography variant="h4" component="div">
                     <Link href={`/room/${room.slug}`}>{room.title}</Link>
                   </Typography>

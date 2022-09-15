@@ -12,6 +12,7 @@ import { GetRoom } from '@modules/room/graphql';
 import { Room } from '@modules/room/types/room';
 import { Tag } from '@modules/tag/types/tag';
 import { RoomSchedule } from '@modules/room/components/schedule/RoomSchedule';
+import Image from "next/image";
 
 type Props = {
   serverProps: any;
@@ -31,6 +32,10 @@ const PageRoom: React.FC<Props> = ({ serverProps, room }) => {
         <Typography variant="h2" component="div">
           {room?.title}
         </Typography>
+
+        { room.preview?.url &&
+          <Image src={room.preview?.url} alt="" width={200} height={100} />
+        }
 
         <Typography variant="h5" component="div">
           {room.duration}min / {room.players_from}-{room.players_to} / {room.difficulty}/10
@@ -55,6 +60,10 @@ const PageRoom: React.FC<Props> = ({ serverProps, room }) => {
         </Typography>
 
         <Typography>{pageContent?.description}</Typography>
+
+        { room.images.map((image, index) => (
+            <Image key={index} src={image.url} alt="" width={100} height={50} />
+        ))}
       </Container>
     </Layout>
   );

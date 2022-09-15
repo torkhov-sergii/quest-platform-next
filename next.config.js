@@ -10,6 +10,9 @@ const nextConfig = {
   /* config options here */
   trailingSlash: true,
   i18n,
+  images: {
+    domains: ["quest-platform.loc"]
+  }
 };
 
 module.exports = nextConfig;
