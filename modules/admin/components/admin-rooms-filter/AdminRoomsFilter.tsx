@@ -61,7 +61,7 @@ export const AdminRoomsFilter: React.FC<RoomsFilterProps> = ({ rooms }) => {
     rooms.map((item) => ({
       id: item.id,
       title: item.title,
-      selected: false,
+      selected: item.id == 1 ? true : false, //TODO, для теста, укоротить список комнат
     }));
   let [roomTags, setRoomTags] = React.useState<RoomTag[]>(initializeRoomTagsState);
   const roomTagsRebuild = () => {
@@ -108,14 +108,14 @@ export const AdminRoomsFilter: React.FC<RoomsFilterProps> = ({ rooms }) => {
   };
 
   const nextScheduleHandle = () => {
-    setDateFrom(addDays(dateFrom, 7))
-    setDateTo(addDays(dateTo, 7))
-  }
+    setDateFrom(addDays(dateFrom, 7));
+    setDateTo(addDays(dateTo, 7));
+  };
 
   const prevScheduleHandle = () => {
-    setDateFrom(addDays(dateFrom, -7))
-    setDateTo(addDays(dateTo, -7))
-  }
+    setDateFrom(addDays(dateFrom, -7));
+    setDateTo(addDays(dateTo, -7));
+  };
 
   return (
     <>
@@ -136,22 +136,37 @@ export const AdminRoomsFilter: React.FC<RoomsFilterProps> = ({ rooms }) => {
           <RoomsFilterSelect value={location} label="Location" options={locations} selectChangeEvent={locationOnSelect} />
         </Box>
 
-        <Button variant="contained" onClick={() => {prevScheduleHandle()}}>prev</Button>
-        <Button variant="contained" onClick={() => {nextScheduleHandle()}}>next</Button>
+        <Button
+          variant="contained"
+          onClick={() => {
+            prevScheduleHandle();
+          }}
+        >
+          prev
+        </Button>
+        <Button
+          variant="contained"
+          onClick={() => {
+            nextScheduleHandle();
+          }}
+        >
+          next
+        </Button>
 
         {roomsFiltered().length ? (
           <>
-            {rooms && roomsFiltered().map((room: Room, index: number) => (
-              <Card key={index}>
-                <CardContent>
-                  <Typography variant="h3" component="div">
-                    { room.title }
-                  </Typography>
+            {rooms &&
+              roomsFiltered().map((room: Room, index: number) => (
+                <Card key={index}>
+                  <CardContent>
+                    <Typography variant="h3" component="div">
+                      {room.title}
+                    </Typography>
 
-                  <AdminRoomSchedule key={index} room={room} dateFromJoint={dateFrom} dateToJoint={dateTo} />
-                </CardContent>
-              </Card>
-            ))}
+                    <AdminRoomSchedule key={index} room={room} dateFromJoint={dateFrom} dateToJoint={dateTo} />
+                  </CardContent>
+                </Card>
+              ))}
           </>
         ) : (
           <Button variant="contained" onClick={clearFiltersOnClick}>

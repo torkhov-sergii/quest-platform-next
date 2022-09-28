@@ -3,9 +3,9 @@ import { Timeslot } from '@modules/timeslot/types/timeslot';
 export interface Customer {
   id: number
 
-  name: string
-  email: string
-  phone: string
+  name: string | null
+  email: string | null
+  phone: string | null
   age: number
   birthday: Date
 }

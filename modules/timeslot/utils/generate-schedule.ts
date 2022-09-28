@@ -1,5 +1,5 @@
 // Генерировать расписание слотов dateFrom, dateTo, room.schedule
-import { RoomCalendarDay, RoomCalendarDayTimeslot } from '@modules/room/types/calendar';
+import { RoomCalendarDay, RoomCalendarDayTimeslot } from "@modules/room/types/calendar";
 import { addMinutes, eachDayOfInterval, format, isBefore, isSameHour, isWithinInterval, parse } from 'date-fns';
 import { Room } from '@modules/room/types/room';
 

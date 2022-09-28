@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styles from './index.module.scss';
 import { Room, Schedule } from '../../types/room';
-import { RoomCalendar, RoomCalendarDay, RoomCalendarDayTimeslot } from '../../types/calendar';
+import { RoomCalendarDay, RoomCalendarDayTimeslot } from '../../types/calendar';
 import {
   parse,
   format,
@@ -70,7 +70,6 @@ export const RoomSchedule: React.FC<RoomScheduleProps> = ({ room }) => {
 
       let timeslotsUnion = _.unionBy(timeslots, _timeslots, 'start');
       setTimeslots(timeslotsUnion)
-
     })
   }, [dateFrom, dateTo])
 
