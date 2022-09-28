@@ -44,6 +44,7 @@ export const updateTimeslot = gql`
         $start: String!, 
         $status: String!,
         $players: Int!,
+        $age: String!,
         $price_final: Int!,
 
         $order: OrderInput,
@@ -55,7 +56,8 @@ export const updateTimeslot = gql`
                 room_id: $room_id,
                 start: $start
                 status: $status
-                players: $players, 
+                players: $players,
+                age: $age, 
                 price_final: $price_final, 
                 order: $order
                 customer: $customer
@@ -110,6 +112,7 @@ export const GetTimeslot = gql`
             status
 
             players
+            age
             price
             
             room {

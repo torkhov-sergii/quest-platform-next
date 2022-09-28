@@ -42,7 +42,7 @@ export default PageAdminRoom;
 export async function getServerSideProps({ params, locale }: any) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['common', 'menu', 'room'])),
+      ...(await serverSideTranslations(locale, ['common', 'menu', 'room', 'timeslot'])),
       roomsFilter: await getAdminRoomsFilterService(locale),
     },
   };

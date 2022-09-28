@@ -28,6 +28,8 @@ interface AdminRoomScheduleDialogProps {
 export const AdminRoomScheduleDialog: React.FC<AdminRoomScheduleDialogProps> = ({ room, timeslot, timeslotClose, updateTimeslotById }) => {
   const { i18n } = useTranslation();
   const apolloClient = initializeApollo(i18n.language);
+  const { t } = useTranslation('timeslot');
+  const ageOption: Array<any> = t('ages', { returnObjects: true });
 
   const [name, setName] = useState(timeslot.order?.customer.name);
   const [phone, setPhone] = useState(timeslot.order?.customer.phone);
@@ -36,6 +38,7 @@ export const AdminRoomScheduleDialog: React.FC<AdminRoomScheduleDialogProps> = (
   const [customerComment, setCustomerComment] = useState(timeslot.order?.customer_comment);
   const [comment, setComment] = useState(timeslot.order?.comment);
   const [players, setPlayers] = useState(timeslot.players);
+  const [age, setAge] = useState(timeslot.age);
   const [status, setStatus] = useState(timeslot.status);
   const [finalPrice, setFinalPrice] = useState<number | null>(null);
   const [DatePickerInjectTimes, setDatePickerInjectTimes] = useState<Date[]>([]);
@@ -115,6 +118,7 @@ export const AdminRoomScheduleDialog: React.FC<AdminRoomScheduleDialogProps> = (
         start: timeslot && startDate ? format(startDate, 'Y-MM-dd H:mm:ss') : null,
         status: status,
         players: players,
+        age: age,
         price_final: finalPrice,
         order: {
           comment: comment,
@@ -256,6 +260,18 @@ export const AdminRoomScheduleDialog: React.FC<AdminRoomScheduleDialogProps> = (
                   <TextField label="Promo" variant="outlined" value={promo} onChange={(event) => setPromo(event.target.value)} />
                   <TextField label="Admin Comment" variant="outlined" value={comment} onChange={(event) => setComment(event.target.value)} />
                   <Typography gutterBottom>Customer Comment: {customerComment}</Typography>
+
+                  <FormControl fullWidth>
+                    <InputLabel>Age</InputLabel>
+                    <Select value={String(age)} label="Age" onChange={(event) => setAge(event.target.value)}>
+                      {ageOption &&
+                        ageOption.map((item: any, index) => (
+                          <MenuItem value={item.value} key={index}>
+                            {item.title}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                  </FormControl>
 
                   <Button variant="contained" color={'error'} onClick={() => cancel()}>
                     Cancel

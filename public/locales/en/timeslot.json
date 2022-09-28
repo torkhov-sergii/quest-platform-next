@@ -1,0 +1,32 @@
+{
+  "ages": [
+    {
+      "title": "select age",
+      "value": ""
+    },
+    {
+      "title": "under 18",
+      "value": "18"
+    },
+    {
+      "title": "18-25",
+      "value": "25"
+    },
+    {
+      "title": "26-35",
+      "value": "35"
+    },
+    {
+      "title": "36-45",
+      "value": "45"
+    },
+    {
+      "title": "46-55",
+      "value": "55"
+    },
+    {
+      "title": "56+",
+      "value": "99"
+    }
+  ]
+}

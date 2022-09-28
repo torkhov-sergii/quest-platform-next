@@ -12,6 +12,7 @@ export interface Timeslot {
   status: string
 
   players: number
+  age: string
   price_final: number
 
   price: number
