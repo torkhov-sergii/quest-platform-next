@@ -9,7 +9,7 @@ export default class MyDocument extends Document {
     return (
       <Html lang={currentLocale}>
         <Head>
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
+          {/*<meta name="viewport" content="initial-scale=1, width=device-width" />*/}
 
           {/*<link href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css' rel='stylesheet' />*/}
           {/*<link href='/app.css' rel='stylesheet' />*/}

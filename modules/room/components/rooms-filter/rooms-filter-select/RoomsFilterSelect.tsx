@@ -19,7 +19,7 @@ export const RoomsFilterSelect: React.FC<RoomsFilterSelectProps> = ({ value, lab
             <em>{ label }</em>
           </MenuItem>
 
-          {options &&
+          {options && options.constructor === Array &&
             options.map((item: any, index) => (
               <MenuItem value={item.value} key={index}>
                 {item.title}
